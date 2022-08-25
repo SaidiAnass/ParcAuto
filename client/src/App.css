@@ -10,7 +10,29 @@ body {
   margin: 0 !important;
 }
 
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+::-webkit-scrollbar {
+  width: 2px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #249bd7; 
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:  #27539e; 
+}
 
 .App-link {
   color: #61dafb;
