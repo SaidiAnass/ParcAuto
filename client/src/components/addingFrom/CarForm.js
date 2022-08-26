@@ -9,6 +9,20 @@ import * as yup from 'yup'
 const validationSchema = yup.object({ // for fields validation
   marque: yup.string().required('Marque is required'),
   immatriculation: yup.string().required('Immatriculation is required'),
+  typeVehicule: yup.string().required('Ce Champs est Obligatoire'),
+  bariole: yup.boolean().required('Ce Champs est Obligatoire'),
+  numeroChassis: yup.string().required('Ce Champs est Obligatoire'),
+  dateMiseEnCirculation: yup.date().required('Ce Champs est Obligatoire'),
+  puissanceFiscale: yup.number().required('Ce Champs est Obligatoire'),
+  couleur: yup.string().required('Ce Champs est Obligatoire'),
+  codeRadio: yup.string().required('Ce Champs est Obligatoire'),
+  refPneus: yup.string().required('Ce Champs est Obligatoire'),
+  echeanceVisiteTechnique: yup.date().required('Ce Champs est Obligatoire'),
+  assuranceContractEnCours: yup.date().required('Ce Champs est Obligatoire'),
+  vignette: yup.date().required('Ce Champs est Obligatoire'),
+  ww: yup.string().required('Ce Champs est Obligatoire'),
+  nombreDeCles: yup.number().required('Ce Champs est Obligatoire'),
+
 })
 
 const theme = createTheme({
@@ -32,6 +46,19 @@ export class CarForm extends Component {
             initialValues={{
               marque: '',
               immatriculation: '',
+              typeVehicule: '',
+              bariole: '',
+              numeroChassis: '',
+              dateMiseEnCirculation: '',
+              puissanceFiscale: '',
+              couleur: '',
+              codeRadio: '',
+              refPneus: '',
+              echeanceVisiteTechnique: '',
+              assuranceContractEnCours: '',
+              vignette: '',
+              ww: '',
+              nombreDeCles: '',
             }}
             onSubmit={(values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2))
@@ -48,6 +75,7 @@ export class CarForm extends Component {
               >
                 <form onSubmit={formik.handleSubmit}>
                   <Box style={styles.boxFrom}>
+                    <Typography style={{ color: '#9e9e9e' }}>2/3</Typography>
                     <Typography variant="h4" style={styles.title}>
                       Fill up the Car Form
                     </Typography>
@@ -87,74 +115,249 @@ export class CarForm extends Component {
                     </div>
                     <div style={styles.fields}>
                       <TextField
-                        id="marque"
-                        name="marque"
-                        label="Marque"
+                        id="typeVehicule"
+                        name="typeVehicule"
+                        label="Type de vehicule"
                         variant="outlined"
-                        value={formik.values.marque}
+                        value={formik.values.typeVehicule}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.marque && Boolean(formik.errors.marque)
+                          formik.touched.typeVehicule && Boolean(formik.errors.typeVehicule)
                         }
                         helperText={
-                          formik.touched.marque && formik.errors.marque
+                          formik.touched.typeVehicule && formik.errors.typeVehicule
                         }
                         style={styles.text}
                       />
                       <TextField
-                        id="immatriculation"
-                        name="immatriculation"
-                        label="Immatriculation"
+                        id="bariole"
+                        name="bariole"
+                        label="Bariolé"
                         variant="outlined"
-                        value={formik.values.immatriculation}
+                        select={true}
+                        value={formik.values.bariole}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.immatriculation &&
-                          Boolean(formik.errors.immatriculation)
+                          formik.touched.bariole &&
+                          Boolean(formik.errors.bariole)
                         }
                         helperText={
-                          formik.touched.immatriculation &&
-                          formik.errors.immatriculation
+                          formik.touched.bariole &&
+                          formik.errors.bariole
+                        }
+                        style={styles.text}
+                      >
+                        <option value="false">Non</option>
+                        <option value="true">Oui</option>
+                      </TextField>
+                    </div>
+                    <div style={styles.fields}>
+                      <TextField
+                        id="numeroChassis"
+                        name="numeroChassis"
+                        label="Numero de chassis"
+                        variant="outlined"
+                        value={formik.values.numeroChassis}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.numeroChassis && Boolean(formik.errors.numeroChassis)
+                        }
+                        helperText={
+                          formik.touched.numeroChassis && formik.errors.numeroChassis
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="dateMiseEnCirculation"
+                        name="dateMiseEnCirculation"
+                        label="Date de mise en Circulation"
+                        variant="outlined"
+                        value={formik.values.dateMiseEnCirculation}
+                        onChange={formik.handleChange}
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        error={
+                          formik.touched.dateMiseEnCirculation &&
+                          Boolean(formik.errors.dateMiseEnCirculation)
+                        }
+                        helperText={
+                          formik.touched.dateMiseEnCirculation &&
+                          formik.errors.dateMiseEnCirculation
                         }
                         style={styles.text}
                       />
                     </div>
                     <div style={styles.fields}>
                       <TextField
-                        id="marque"
-                        name="marque"
-                        label="Marque"
+                        id="puissanceFiscale"
+                        name="puissanceFiscale"
+                        label="Puissance Fiscale"
                         variant="outlined"
-                        value={formik.values.marque}
+                        type="number"
+                        value={formik.values.puissanceFiscale}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.marque && Boolean(formik.errors.marque)
+                          formik.touched.puissanceFiscale && Boolean(formik.errors.puissanceFiscale)
                         }
                         helperText={
-                          formik.touched.marque && formik.errors.marque
+                          formik.touched.puissanceFiscale && formik.errors.puissanceFiscale
                         }
                         style={styles.text}
                       />
                       <TextField
-                        id="immatriculation"
-                        name="immatriculation"
-                        label="Immatriculation"
+                        id="couleur"
+                        name="couleur"
+                        label="Couleur"
                         variant="outlined"
-                        value={formik.values.immatriculation}
+                        value={formik.values.couleur}
                         onChange={formik.handleChange}
                         error={
-                          formik.touched.immatriculation &&
-                          Boolean(formik.errors.immatriculation)
+                          formik.touched.couleur &&
+                          Boolean(formik.errors.couleur)
                         }
                         helperText={
-                          formik.touched.immatriculation &&
-                          formik.errors.immatriculation
+                          formik.touched.couleur &&
+                          formik.errors.couleur
                         }
                         style={styles.text}
                       />
                     </div>
-
+                    <div style={styles.fields}>
+                      <TextField
+                        id="codeRadio"
+                        name="codeRadio"
+                        label="Code radio"
+                        variant="outlined"
+                        value={formik.values.codeRadio}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.codeRadio && Boolean(formik.errors.codeRadio)
+                        }
+                        helperText={
+                          formik.touched.codeRadio && formik.errors.codeRadio
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="refPneus"
+                        name="refPneus"
+                        label="Référence pneus"
+                        variant="outlined"
+                        value={formik.values.refPneus}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.refPneus &&
+                          Boolean(formik.errors.refPneus)
+                        }
+                        helperText={
+                          formik.touched.refPneus &&
+                          formik.errors.refPneus
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <div style={styles.fields}>
+                      <TextField
+                        id="echeanceVisiteTechnique"
+                        name="echeanceVisiteTechnique"
+                        label="Echéance visite technique"
+                        variant="outlined"
+                        value={formik.values.echeanceVisiteTechnique}
+                        onChange={formik.handleChange}
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        error={
+                          formik.touched.echeanceVisiteTechnique && Boolean(formik.errors.echeanceVisiteTechnique)
+                        }
+                        helperText={
+                          formik.touched.echeanceVisiteTechnique && formik.errors.echeanceVisiteTechnique
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="assuranceContractEnCours"
+                        name="assuranceContractEnCours"
+                        label="Assurance contract en cours"
+                        variant="outlined"
+                        value={formik.values.assuranceContractEnCours}
+                        onChange={formik.handleChange}
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        error={
+                          formik.touched.assuranceContractEnCours &&
+                          Boolean(formik.errors.assuranceContractEnCours)
+                        }
+                        helperText={
+                          formik.touched.assuranceContractEnCours &&
+                          formik.errors.assuranceContractEnCours
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <div style={styles.fields}>
+                      <TextField
+                        id="vignette"
+                        name="vignette"
+                        label="Vignette"
+                        variant="outlined"
+                        value={formik.values.vignette}
+                        onChange={formik.handleChange}
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        error={
+                          formik.touched.vignette && Boolean(formik.errors.vignette)
+                        }
+                        helperText={
+                          formik.touched.vignette && formik.errors.vignette
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="ww"
+                        name="ww"
+                        label="WW"
+                        variant="outlined"
+                        value={formik.values.ww}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.ww &&
+                          Boolean(formik.errors.ww)
+                        }
+                        helperText={
+                          formik.touched.ww &&
+                          formik.errors.ww
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <div style={styles.fields}>
+                      <TextField
+                        id="nombreDeCles"
+                        name="nombreDeCles"
+                        label="Nombre de Clés"
+                        variant="outlined"
+                        value={formik.values.nombreDeCles}
+                        onChange={formik.handleChange}
+                        type="number"
+                        error={
+                          formik.touched.nombreDeCles && Boolean(formik.errors.nombreDeCles)
+                        }
+                        helperText={
+                          formik.touched.nombreDeCles && formik.errors.nombreDeCles
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <Typography style={{ color: '#9e9e9e', marginTop: 20 }}>* Obligatoire</Typography>
                     <div style={styles.div}>
+                      <Button
+                        type="reset"
+                        variant="contained"
+                        style={styles.button}
+                        onClick={e => formik.resetForm()}
+                      >
+                        Reset
+                      </Button>
                       <Button
                         onClick={this.back}
                         variant="contained"
@@ -184,7 +387,7 @@ export class CarForm extends Component {
                       </Button>
                     </div>
 
-                    <PersistFormikValues name="car-form" />
+                    <PersistFormikValues storage='sessionStorage' name="car-form" />
                   </Box>
                 </form>
               </Grid>
@@ -228,7 +431,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 250,
+    marginTop: 60,
     padding: 20,
     borderRadius: 16,
     backgroundColor: '#e6e6e6',

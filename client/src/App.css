@@ -1,6 +1,7 @@
 .App {
   background-color: 'linear-gradient(red, blue)' ;
   max-width: 99.99vw;
+  min-width: 1700px;
   height: 99.99vh;
   overflow-x: hidden;
 }
