@@ -1,0 +1,28 @@
+.e-grid .e-headercell {
+    background-color: #eef9ff;
+    color: black;
+    font-weight: bolder;
+ padding: 5px;
+ }
+
+ .e-grid * {
+    font-size: 15px !important;
+  }
+
+ .e-grid .e-toolbar-items{
+    background-color: rgba(235, 235, 235, 2)
+    ;
+}
+
+.e-grid .e-toolbar .e-btn {
+    background-color: rgba(235, 235, 235, 2)
+    ;
+}
+
+.e-grid .e-checkbox-wrapper .e-frame {
+    border-radius: 5px;
+}
+
+.e-grid .e-rowcell{
+    padding: 10px;
+}              

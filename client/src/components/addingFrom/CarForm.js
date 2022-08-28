@@ -9,19 +9,21 @@ import * as yup from 'yup'
 const validationSchema = yup.object({ // for fields validation
   marque: yup.string().required('Marque is required'),
   immatriculation: yup.string().required('Immatriculation is required'),
-  typeVehicule: yup.string().required('Ce Champs est Obligatoire'),
-  bariole: yup.boolean().required('Ce Champs est Obligatoire'),
+  typeVehicule: yup.string(),
+  bariole: yup.boolean(),
   numeroChassis: yup.string().required('Ce Champs est Obligatoire'),
-  dateMiseEnCirculation: yup.date().required('Ce Champs est Obligatoire'),
-  puissanceFiscale: yup.number().required('Ce Champs est Obligatoire'),
-  couleur: yup.string().required('Ce Champs est Obligatoire'),
-  codeRadio: yup.string().required('Ce Champs est Obligatoire'),
-  refPneus: yup.string().required('Ce Champs est Obligatoire'),
+  dateMiseEnCirculation: yup.date(),
+  puissanceFiscale: yup.number(),
+  couleur: yup.string(),
+  codeRadio: yup.string(),
+  refPneus: yup.string(),
   echeanceVisiteTechnique: yup.date().required('Ce Champs est Obligatoire'),
   assuranceContractEnCours: yup.date().required('Ce Champs est Obligatoire'),
   vignette: yup.date().required('Ce Champs est Obligatoire'),
   ww: yup.string().required('Ce Champs est Obligatoire'),
   nombreDeCles: yup.number().required('Ce Champs est Obligatoire'),
+  RecoAttrVehicule: yup.string(),
+  cartesVerte: yup.string(),
 
 })
 
@@ -59,10 +61,15 @@ export class CarForm extends Component {
               vignette: '',
               ww: '',
               nombreDeCles: '',
+              RecoAttrVehicule: '',
+              cartesVerte: '',
             }}
             onSubmit={(values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2))
+              this.props.updateConstactFields(values)
               this.props.nextStep()
+              console.log(this.props.contract)
+
             }}
             validationSchema={validationSchema}
           >
@@ -83,7 +90,7 @@ export class CarForm extends Component {
                       <TextField
                         id="marque"
                         name="marque"
-                        label="Marque"
+                        label="Marque *"
                         variant="outlined"
                         value={formik.values.marque}
                         onChange={formik.handleChange}
@@ -98,7 +105,7 @@ export class CarForm extends Component {
                       <TextField
                         id="immatriculation"
                         name="immatriculation"
-                        label="Immatriculation"
+                        label="Immatriculation *"
                         variant="outlined"
                         value={formik.values.immatriculation}
                         onChange={formik.handleChange}
@@ -155,7 +162,7 @@ export class CarForm extends Component {
                       <TextField
                         id="numeroChassis"
                         name="numeroChassis"
-                        label="Numero de chassis"
+                        label="Numero de chassis *"
                         variant="outlined"
                         value={formik.values.numeroChassis}
                         onChange={formik.handleChange}
@@ -260,7 +267,7 @@ export class CarForm extends Component {
                       <TextField
                         id="echeanceVisiteTechnique"
                         name="echeanceVisiteTechnique"
-                        label="Echéance visite technique"
+                        label="Echéance visite technique *"
                         variant="outlined"
                         value={formik.values.echeanceVisiteTechnique}
                         onChange={formik.handleChange}
@@ -277,7 +284,7 @@ export class CarForm extends Component {
                       <TextField
                         id="assuranceContractEnCours"
                         name="assuranceContractEnCours"
-                        label="Assurance contract en cours"
+                        label="Assurance contract en cours *"
                         variant="outlined"
                         value={formik.values.assuranceContractEnCours}
                         onChange={formik.handleChange}
@@ -298,7 +305,7 @@ export class CarForm extends Component {
                       <TextField
                         id="vignette"
                         name="vignette"
-                        label="Vignette"
+                        label="Vignette *"
                         variant="outlined"
                         value={formik.values.vignette}
                         onChange={formik.handleChange}
@@ -315,7 +322,7 @@ export class CarForm extends Component {
                       <TextField
                         id="ww"
                         name="ww"
-                        label="WW"
+                        label="WW *"
                         variant="outlined"
                         value={formik.values.ww}
                         onChange={formik.handleChange}
@@ -334,7 +341,7 @@ export class CarForm extends Component {
                       <TextField
                         id="nombreDeCles"
                         name="nombreDeCles"
-                        label="Nombre de Clés"
+                        label="Nombre de Clés *"
                         variant="outlined"
                         value={formik.values.nombreDeCles}
                         onChange={formik.handleChange}
@@ -344,6 +351,42 @@ export class CarForm extends Component {
                         }
                         helperText={
                           formik.touched.nombreDeCles && formik.errors.nombreDeCles
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="cartesVerte"
+                        name="cartesVerte"
+                        label="Cartes verte"
+                        variant="outlined"
+                        value={formik.values.cartesVerte}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.cartesVerte &&
+                          Boolean(formik.errors.cartesVerte)
+                        }
+                        helperText={
+                          formik.touched.cartesVerte &&
+                          formik.errors.cartesVerte
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <div style={styles.fields}>                    
+                    <TextField
+                        id="RecoAttrVehicule"
+                        name="RecoAttrVehicule"
+                        label="Reco_Attr_Vehicule"
+                        variant="outlined"
+                        value={formik.values.RecoAttrVehicule}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.RecoAttrVehicule &&
+                          Boolean(formik.errors.RecoAttrVehicule)
+                        }
+                        helperText={
+                          formik.touched.RecoAttrVehicule &&
+                          formik.errors.RecoAttrVehicule
                         }
                         style={styles.text}
                       />
@@ -431,7 +474,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 8,
     padding: 20,
     borderRadius: 16,
     backgroundColor: '#e6e6e6',

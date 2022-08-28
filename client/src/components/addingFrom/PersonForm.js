@@ -10,9 +10,14 @@ const validationSchema = yup.object({   // for fields validation
   nom: yup.string().required('Ce Champ est obligatoire'),
   prenom: yup.string().required('Ce Champ est obligatoire'),
   matricule: yup.string().required('Ce Champ est obligatoire'),
-  grade: yup.string().required('Le Champ Grade est obligatoire'),
-  departement: yup.string().required('Ce Champ est obligatoire'),
+  grade: yup.string(),
+  departement: yup.string(),
   filiale: yup.string().required('Ce Champ est obligatoire'),
+  numTagJawaz: yup.string().required('Ce Champs est Obligatoire'),
+  plafondJawaz: yup.number(),
+  numeroCarteCarburant: yup.string().required('Ce Champs est Obligatoire'),
+  dotationCarteCarburant: yup.number(),
+  expirationCarteCarburant: yup.date(),
 })
 
 const theme = createTheme({
@@ -36,10 +41,17 @@ export class PersonForm extends Component {
               grade: '',
               departement: '',
               filiale: '',
+              numTagJawaz: '',
+              plafondJawaz: '',
+              numeroCarteCarburant: '',
+              dotationCarteCarburant: '',
+              expirationCarteCarburant: '',
             }}
             onSubmit={(values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2))
+              this.props.updateConstactFields(values)
               this.props.nextStep()
+
             }}
             validationSchema={validationSchema}
           >
@@ -76,7 +88,7 @@ export class PersonForm extends Component {
                       <TextField
                         id="prenom"
                         name="prenom"
-                        label="Prenom *"
+                        label="Pérnom *"
                         variant="outlined"
                         value={formik.values.prenom}
                         onChange={formik.handleChange}
@@ -109,7 +121,7 @@ export class PersonForm extends Component {
                       <TextField
                         id="grade"
                         name="grade"
-                        label="Grade *"
+                        label="Grade"
                         variant="outlined"
                         value={formik.values.grade}
                         onChange={formik.handleChange}
@@ -127,7 +139,7 @@ export class PersonForm extends Component {
                       <TextField
                         id="departement"
                         name="departement"
-                        label="Département "
+                        label="Département"
                         variant="outlined"
                         value={formik.values.departement}
                         onChange={formik.handleChange}
@@ -137,6 +149,115 @@ export class PersonForm extends Component {
                         }
                         helperText={
                           formik.touched.departement && formik.errors.departement
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="filiale"
+                        name="filiale"
+                        label="Filiale *"
+                        variant="outlined"
+                        value={formik.values.filiale}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.filiale &&
+                          Boolean(formik.errors.filiale)
+                        }
+                        helperText={
+                          formik.touched.filiale && formik.errors.filiale
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <div style={styles.fields}>
+                    <TextField
+                        id="numTagJawaz"
+                        name="numTagJawaz"
+                        label="Numero Tag Jawaz *"
+                        variant="outlined"
+                        value={formik.values.numTagJawaz}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.numTagJawaz &&
+                          Boolean(formik.errors.numTagJawaz)
+                        }
+                        helperText={
+                          formik.touched.numTagJawaz &&
+                          formik.errors.numTagJawaz
+                        }
+                        style={styles.text}
+                      />
+                    <TextField
+                        id="plafondJawaz"
+                        name="plafondJawaz"
+                        label="Plafond Jawaz"
+                        variant="outlined"
+                        value={formik.values.plafondJawaz}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.plafondJawaz &&
+                          Boolean(formik.errors.plafondJawaz)
+                        }
+                        helperText={
+                          formik.touched.plafondJawaz &&
+                          formik.errors.plafondJawaz
+                        }
+                        style={styles.text}
+                      />
+                    </div>
+                    <div style={styles.fields}>
+                    <TextField
+                        id="numeroCarteCarburant"
+                        name="numeroCarteCarburant"
+                        label="Numero carte carburant *"
+                        variant="outlined"
+                        value={formik.values.numeroCarteCarburant}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.numeroCarteCarburant &&
+                          Boolean(formik.errors.numeroCarteCarburant)
+                        }
+                        helperText={
+                          formik.touched.numeroCarteCarburant &&
+                          formik.errors.numeroCarteCarburant
+                        }
+                        style={styles.text}
+                      />
+                      <TextField
+                        id="dotationCarteCarburant"
+                        name="dotationCarteCarburant"
+                        label="Dotation carte carburant"
+                        variant="outlined"
+                        value={formik.values.dotationCarteCarburant}
+                        onChange={formik.handleChange}
+                        error={
+                          formik.touched.dotationCarteCarburant &&
+                          Boolean(formik.errors.dotationCarteCarburant)
+                        }
+                        helperText={
+                          formik.touched.dotationCarteCarburant &&
+                          formik.errors.dotationCarteCarburant
+                        }
+                        style={styles.text}
+                      />
+                      </div>
+                      <div style={styles.fields}>
+                      <TextField
+                        id="expirationCarteCarburant"
+                        name="expirationCarteCarburant"
+                        label="Expiration carte carburant"
+                        variant="outlined"
+                        value={formik.values.expirationCarteCarburant}
+                        onChange={formik.handleChange}
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        error={
+                          formik.touched.expirationCarteCarburant &&
+                          Boolean(formik.errors.expirationCarteCarburant)
+                        }
+                        helperText={
+                          formik.touched.expirationCarteCarburant &&
+                          formik.errors.expirationCarteCarburant
                         }
                         style={styles.text}
                       />
@@ -231,7 +352,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 250,
+    marginTop: 130,
     padding: 20,
     borderRadius: 16,
     backgroundColor: '#e6e6e6',

@@ -4,8 +4,14 @@ import FormSignIn from './components/FormSignIn'
 import SimpleViewtable from './components/dataGrid/SimpleViewtable'
 import AddingForm from './components/addingFrom/AddingForm'
 import ExtendedViewTable from './components/dataGrid/ExtendedViewTable'
+import { registerLicense } from '@syncfusion/ej2-base';
 
 function App() {
+
+
+  // Registering Syncfusion license key
+  registerLicense('ORg4AjUWIQA/Gnt2VVhiQlFadVlJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRdk1hXn5ccnxWRGFaUEE=');
+
   return (
     <div className="App" style={gradient}>
       <Routes>

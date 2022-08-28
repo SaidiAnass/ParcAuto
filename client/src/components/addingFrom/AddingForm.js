@@ -4,10 +4,23 @@ import ServiceForm from './ServiceForm'
 import Success from './Success'
 import React, { Component } from 'react'
 
+
+
+
+
 export class AddingForm extends Component {
+
   state = {
     step: 1,
+    contractFields: {
+    },
   }
+
+  updateContractFields = (data) => {
+    this.setState((contractFields) => ({ ...contractFields, data }))
+    console.log(this.state.contractFields)
+  }//retaining data across the multi-step from 
+
 
   //Proceed to next Step
   nextStep = () => {
@@ -27,6 +40,7 @@ export class AddingForm extends Component {
 
   render() {
     const { step } = this.state //to handle the form stepper
+    const { contractFields } = this.state
 
     //to route to the proper form according to the step
     switch (step) {
@@ -35,6 +49,8 @@ export class AddingForm extends Component {
           <PersonForm
             nextStep={this.nextStep} //props to pass the nextStep function to the PersonForm to use it in the continue button & handle the fields
             handleChange={this.handleChange}
+            contract={contractFields}
+            updateConstactFields={this.updateContractFields}
           />
         )
       case 2:
@@ -43,6 +59,8 @@ export class AddingForm extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            contract={contractFields}
+            updateConstactFields={this.updateContractFields}
           />
         )
       case 3:
@@ -51,6 +69,8 @@ export class AddingForm extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            contract={contractFields}
+            updateConstactFields={this.updateContractFields}
           />
         )
       case 4:

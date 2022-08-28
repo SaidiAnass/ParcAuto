@@ -32,13 +32,6 @@ const validationSchema = yup.object({  // for fields validation
   DateEffectiveRestitution: yup.date().required('Ce Champs est Obligatoire'),
   KM_dateRetour: yup.number().required('Ce Champs est Obligatoire'),
   contractEchu_enCours: yup.string().required('Ce Champs est Obligatoire'),
-  RecoAttrVehicule: yup.string().required('Ce Champs est Obligatoire'),
-  cartesVerte: yup.string().required('Ce Champs est Obligatoire'),
-  numTagJawaz: yup.string().required('Ce Champs est Obligatoire'),
-  plafondJawaz: yup.number().required('Ce Champs est Obligatoire'),
-  numeroCarteCarburant: yup.string().required('Ce Champs est Obligatoire'),
-  dotationCarteCarburant: yup.number().required('Ce Champs est Obligatoire'),
-  expirationCarteCarburant: yup.date().required('Ce Champs est Obligatoire'),
 })
 
 const theme = createTheme({
@@ -85,18 +78,20 @@ export class ServiceForm extends Component {
               DateEffectiveRestitution: '',
               KM_dateRetour: '',
               contractEchu_enCours: '',
-              RecoAttrVehicule: '',
-              cartesVerte: '',
-              numTagJawaz: '',
-              plafondJawaz: '',
-              numeroCarteCarburant: '',
-              dotationCarteCarburant: '',
-              expirationCarteCarburant: '',
             }}
-            onSubmit={(values, { resetForm }) => { //displaying the alert when submitting a form & going to the next form 
+            onSubmit={async (values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2));
-              this.props.nextStep();
-              Formik.resetForm()
+              this.props.updateConstactFields(values)
+            //   await axios.post("http://localhost:4000/api/contract/", this.props.contract).catch(function (error) {
+            //     if(error.response){
+            //       alert(error.response.data.error)
+            //     }
+            //     else{
+            //       console.log("Success")                  
+            //     }
+            //   }).then(alert('Contract added Succesfully'))
+            //   this.props.nextStep();
+            //   // console.log(this.props.contractFields)
             }}
             validationSchema={validationSchema}
           >
@@ -150,6 +145,7 @@ export class ServiceForm extends Component {
                         style={styles.text}
                       ><option value="fonction">Fonction</option>
                         <option value="service">Service</option></TextField>
+                        
                     </div>
                     <div style={styles.fields}>
                       <TextField
@@ -575,131 +571,6 @@ export class ServiceForm extends Component {
                         style={styles.text}
                       >      <option value="enCours">en Cours</option>
                         <option value="echu">Echu</option></TextField>
-                      <TextField
-                        id="RecoAttrVehicule"
-                        name="RecoAttrVehicule"
-                        label="Reco_Attr_Vehicule"
-                        variant="outlined"
-                        value={formik.values.RecoAttrVehicule}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.RecoAttrVehicule &&
-                          Boolean(formik.errors.RecoAttrVehicule)
-                        }
-                        helperText={
-                          formik.touched.RecoAttrVehicule &&
-                          formik.errors.RecoAttrVehicule
-                        }
-                        style={styles.text}
-                      />
-                    </div>
-                    <div style={styles.fields}>
-                      <TextField
-                        id="cartesVerte"
-                        name="cartesVerte"
-                        label="Cartes verte"
-                        variant="outlined"
-                        value={formik.values.cartesVerte}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.cartesVerte &&
-                          Boolean(formik.errors.cartesVerte)
-                        }
-                        helperText={
-                          formik.touched.cartesVerte &&
-                          formik.errors.cartesVerte
-                        }
-                        style={styles.text}
-                      />
-                      <TextField
-                        id="numTagJawaz"
-                        name="numTagJawaz"
-                        label="Numero Tag Jawaz"
-                        variant="outlined"
-                        value={formik.values.numTagJawaz}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.numTagJawaz &&
-                          Boolean(formik.errors.numTagJawaz)
-                        }
-                        helperText={
-                          formik.touched.numTagJawaz &&
-                          formik.errors.numTagJawaz
-                        }
-                        style={styles.text}
-                      />
-                      <TextField
-                        id="plafondJawaz"
-                        name="plafondJawaz"
-                        label="Plafond Jawaz"
-                        variant="outlined"
-                        value={formik.values.plafondJawaz}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.plafondJawaz &&
-                          Boolean(formik.errors.plafondJawaz)
-                        }
-                        helperText={
-                          formik.touched.plafondJawaz &&
-                          formik.errors.plafondJawaz
-                        }
-                        style={styles.text}
-                      />
-                    </div>
-                    <div style={styles.fields}>
-                      <TextField
-                        id="numeroCarteCarburant"
-                        name="numeroCarteCarburant"
-                        label="Numero carte carburant"
-                        variant="outlined"
-                        value={formik.values.numeroCarteCarburant}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.numeroCarteCarburant &&
-                          Boolean(formik.errors.numeroCarteCarburant)
-                        }
-                        helperText={
-                          formik.touched.numeroCarteCarburant &&
-                          formik.errors.numeroCarteCarburant
-                        }
-                        style={styles.text}
-                      />
-                      <TextField
-                        id="dotationCarteCarburant"
-                        name="dotationCarteCarburant"
-                        label="Dotation carte carburant"
-                        variant="outlined"
-                        value={formik.values.dotationCarteCarburant}
-                        onChange={formik.handleChange}
-                        error={
-                          formik.touched.dotationCarteCarburant &&
-                          Boolean(formik.errors.dotationCarteCarburant)
-                        }
-                        helperText={
-                          formik.touched.dotationCarteCarburant &&
-                          formik.errors.dotationCarteCarburant
-                        }
-                        style={styles.text}
-                      />
-                      <TextField
-                        id="expirationCarteCarburant"
-                        name="expirationCarteCarburant"
-                        label="Expiration carte carburant"
-                        variant="outlined"
-                        value={formik.values.expirationCarteCarburant}
-                        onChange={formik.handleChange}
-                        type="date"
-                        InputLabelProps={{ shrink: true }}
-                        error={
-                          formik.touched.expirationCarteCarburant &&
-                          Boolean(formik.errors.expirationCarteCarburant)
-                        }
-                        helperText={
-                          formik.touched.expirationCarteCarburant &&
-                          formik.errors.expirationCarteCarburant
-                        }
-                        style={styles.text}
-                      />
                     </div>
                     <Typography style={{ color: '#9e9e9e', marginTop: 20 }}>* Obligatoire</Typography>
                     <div style={styles.div}>
