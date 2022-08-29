@@ -42,12 +42,11 @@ const theme = createTheme({
   },
 })
 
-export class ServiceForm extends Component {
-  back = (e) => {
+const ServiceForm =(props) => {
+  const back = (e) => {
     e.preventDefault()
-    this.props.prevStep()
+    props.prevStep()
   }
-  render() {
     return (
       <>
         <ThemeProvider theme={theme}>
@@ -81,17 +80,17 @@ export class ServiceForm extends Component {
             }}
             onSubmit={async (values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2));
-              this.props.updateConstactFields(values)
-            //   await axios.post("http://localhost:4000/api/contract/", this.props.contract).catch(function (error) {
-            //     if(error.response){
-            //       alert(error.response.data.error)
-            //     }
-            //     else{
-            //       console.log("Success")                  
-            //     }
-            //   }).then(alert('Contract added Succesfully'))
-            //   this.props.nextStep();
-            //   // console.log(this.props.contractFields)
+              //this.props.updateConstactFields(values)
+              // await axios.post("http://localhost:4000/api/contract/", this.props.contract).catch(function (error) {
+              //   if(error.response){
+              //     alert(error.response.data.error)
+              //   }
+              //   else{
+              //     console.log("Success")                  
+              //   }
+              // }).then(alert('Contract added Succesfully'))
+              props.nextStep();
+              // console.log(this.props.contractFields)
             }}
             validationSchema={validationSchema}
           >
@@ -583,7 +582,7 @@ export class ServiceForm extends Component {
                         Reset
                       </Button>
                       <Button
-                        onClick={this.back}
+                        onClick={back}
                         variant="contained"
                         style={styles.button}
                       >
@@ -618,7 +617,7 @@ export class ServiceForm extends Component {
         </ThemeProvider>
       </>
     )
-  }
+
 }
 
 const styles = {

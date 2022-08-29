@@ -28,8 +28,7 @@ const theme = createTheme({
   },
 })
 
-export class PersonForm extends Component {
-  render() {
+const PersonForm = (props) => {
     return (
       <>
         <ThemeProvider theme={theme}>
@@ -49,8 +48,9 @@ export class PersonForm extends Component {
             }}
             onSubmit={(values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2))
-              this.props.updateConstactFields(values)
-              this.props.nextStep()
+              //this.props.updateConstactFields(values)
+              //this.props.nextStep()
+              props.nextStep()
 
             }}
             validationSchema={validationSchema}
@@ -316,7 +316,7 @@ export class PersonForm extends Component {
         </ThemeProvider>
       </>
     )
-  }
+  
 }
 
 const styles = {

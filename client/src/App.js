@@ -5,6 +5,7 @@ import SimpleViewtable from './components/dataGrid/SimpleViewtable'
 import AddingForm from './components/addingFrom/AddingForm'
 import ExtendedViewTable from './components/dataGrid/ExtendedViewTable'
 import { registerLicense } from '@syncfusion/ej2-base';
+import PrivateRoutes from './components/PrivateRoutes'
 
 function App() {
 
@@ -15,10 +16,13 @@ function App() {
   return (
     <div className="App" style={gradient}>
       <Routes>
+        <Route element={<PrivateRoutes/>}>
+          <Route path="/simpleView" element={<SimpleViewtable />} />      //simplified version of the data grid
+          <Route path="/addingCar" element={<AddingForm />} />            //handling the form for adding the mini-contract
+          <Route path="/extendedView" element={<ExtendedViewTable />} />  //detailed version of the data grid
+        </Route>
         <Route exact path="/" element={<FormSignIn />} />               //the sign in page
-        <Route path="/simpleView" element={<SimpleViewtable />} />      //simplified version of the data grid
-        <Route path="/addingCar" element={<AddingForm />} />            //handling the form for adding the mini-contract
-        <Route path="/extendedView" element={<ExtendedViewTable />} />  //detailed version of the data grid
+        
       </Routes>
     </div>
   )

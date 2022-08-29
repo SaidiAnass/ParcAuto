@@ -11,6 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import { RestoreOutlined } from "@material-ui/icons";
+import PrivateRoutes from "./PrivateRoutes";
+import { setAuthToken } from "./setAuthToken";
 
 
 const FormSignUp = () => {
@@ -42,6 +45,7 @@ const FormSignUp = () => {
       fontSize: 15,
     },
   });
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -52,13 +56,18 @@ const FormSignUp = () => {
           }}
           onSubmit={async (values) => {
             try{
-               await axios.post('http://localhost:4000/api/user/login', values)
-               console.log("Success")
-               alert("Success")
-               window.location.href = "/simpleView"
+               await axios.post('http://localhost:4000/api/user/login', values).then(
+                response => {
+                  const token = response.data.token;
+                  localStorage.setItem("token", token);
+                  setAuthToken(token)
+                  alert("Success")
+                  window.location.href = "/simpleView"
+                }
+               )
+    
             }catch(error) {
-                    alert(error.response.data.error + " - Please Enter the right credentials")
-
+                  alert(error.response.data.error + " - Please Enter the right credentials")
               }
             console.log(values);
           }}

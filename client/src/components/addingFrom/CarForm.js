@@ -35,12 +35,11 @@ const theme = createTheme({
   },
 })
 
-export class CarForm extends Component {
-  back = (e) => {
+const CarForm = (props) => {
+  const back = (e) => {
     e.preventDefault()
-    this.props.prevStep()
+    props.prevStep()
   }
-  render() {
     return (
       <>
         <ThemeProvider theme={theme}>
@@ -66,9 +65,9 @@ export class CarForm extends Component {
             }}
             onSubmit={(values) => { //displaying the alert when submitting a form & going to the next form 
               alert(JSON.stringify(values, null, 2))
-              this.props.updateConstactFields(values)
-              this.props.nextStep()
-              console.log(this.props.contract)
+              // this.props.updateConstactFields(values)
+              props.nextStep()
+              // console.log(this.props.contract)
 
             }}
             validationSchema={validationSchema}
@@ -402,7 +401,7 @@ export class CarForm extends Component {
                         Reset
                       </Button>
                       <Button
-                        onClick={this.back}
+                        onClick={back}
                         variant="contained"
                         style={styles.button}
                       >
@@ -440,7 +439,7 @@ export class CarForm extends Component {
       </>
     )
   }
-}
+
 
 const styles = {
   button: {
