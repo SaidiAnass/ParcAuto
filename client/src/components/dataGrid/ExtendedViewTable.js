@@ -507,7 +507,7 @@ const ExtendedViewTable = () => {
                     <ColumnsDirective>
                       <ColumnDirective
                         type="checkbox"
-                        maxWidth="15"
+                        maxWidth="60"
                       />
 
                       <ColumnDirective

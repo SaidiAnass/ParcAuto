@@ -2,7 +2,8 @@ import PersonForm from './PersonForm'
 import CarForm from './CarForm'
 import ServiceForm from './ServiceForm'
 import Success from './Success'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { setFullScreenDialog } from '@syncfusion/ej2-react-grids'
 
 
 
@@ -13,6 +14,7 @@ const AddingForm = () => {
 
 
   const [step, setStep] = useState(1)
+  const [contractFields, setContractFields] = useState({});
 
   // const updateContractFields = (data) => {
   //   this.setState((contractFields) => ({ ...contractFields, data }))
@@ -31,7 +33,11 @@ const AddingForm = () => {
 
   }
 
+  // useEffect(() => console.log("re-render because step changed:"), [contractFields])
 
+  const  updateContractFields = (data) => {
+    setContractFields((prevContractFields) => ({...prevContractFields, ...data}))
+  }
 
 
     //to route to the proper form according to the step
@@ -41,8 +47,8 @@ const AddingForm = () => {
           <PersonForm
             nextStep={nextStep} //props to pass the nextStep function to the PersonForm to use it in the continue button & handle the fields
             //handleChange={this.handleChange}
-            // contract={contractFields}
-            // updateConstactFields={this.updateContractFields}
+            contractFields={contractFields}
+            updateContractFields={updateContractFields}
           />
         )
       case 2:
@@ -51,8 +57,8 @@ const AddingForm = () => {
             nextStep={nextStep}
             prevStep={prevStep}
             // handleChange={this.handleChange}
-            // contract={contractFields}
-            // updateConstactFields={this.updateContractFields}
+            contractFields={contractFields}
+            updateContractFields={updateContractFields}
           />
         )
       case 3:
@@ -61,12 +67,12 @@ const AddingForm = () => {
             nextStep={nextStep}
             prevStep={prevStep}
             // handleChange={this.handleChange}
-            // contract={contractFields}
-            // updateConstactFields={this.updateContractFields}
+            contractFields={contractFields}
+            updateContractFields={updateContractFields}
           />
         )
       case 4:
-        return <Success />
+        return <Success contractFields={contractFields}/>
       default:
         return (
           <p>

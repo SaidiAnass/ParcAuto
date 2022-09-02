@@ -13,6 +13,7 @@ function App() {
   // Registering Syncfusion license key
   registerLicense('ORg4AjUWIQA/Gnt2VVhiQlFadVlJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRdk1hXn5ccnxWRGFaUEE=');
 
+  
   return (
     <div className="App" style={gradient}>
       <Routes>

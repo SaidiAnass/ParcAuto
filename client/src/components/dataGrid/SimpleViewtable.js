@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-// import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteIcon from "@material-ui/icons/Delete";
 import FullscreenIcon from "@material-ui/icons/Fullscreen";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -29,6 +29,8 @@ import {
   ExcelExport,
 } from "@syncfusion/ej2-react-grids";
 import "./grid.css";
+import { DataManager, UrlAdaptor } from "@syncfusion/ej2-data";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -37,6 +39,8 @@ const useStyles = makeStyles({
 });
 
 const SimpleViewtable = () => {
+
+  let navigate = useNavigate()
   const theme = createTheme({
     // custoizing the fonts
     typography: {
@@ -45,355 +49,12 @@ const SimpleViewtable = () => {
     },
   });
 
-  // const columns = [
-  //   { field: "marque", headerName: "marque", width: 80 }, //voiture
-  //   {
-  //     field: "immatriculation",
-  //     headerName: "immatriculation",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "bariole",
-  //     headerName: "bariole",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "typeVehicule",
-  //     headerName: "typeVehicule",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "numeroChassis",
-  //     headerName: "numeroChassis",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "dateMiseEnCirculation",
-  //     headerName: "dateMiseEnCirculation",
-  //     width: 80,
-  //   },
-  //   {
-  //     field: "puissanceFiscale",
-  //     headerName: "puissanceFiscale",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "couleur",
-  //     headerName: "couleur",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "codeRadio",
-  //     headerName: "codeRadio",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "refPneus",
-  //     headerName: "refPneus",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "echeanceVisiteTechnique",
-  //     headerName: "echeanceVisiteTechnique",
-  //     width: 80,
-  //   },
-  //   {
-  //     field: "echeanceVisiteTechnique",
-  //     headerName: "echeanceVisiteTechnique",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "assuranceContractEnCours",
-  //     headerName: "assuranceContractEnCours",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "vignette",
-  //     headerName: "vignette",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "ww",
-  //     headerName: "ww",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   { field: "nombreDeCles", headerName: "nombreDeCles", width: 80 },
-  //   {
-  //     field: "RecoAttrVehicule",
-  //     headerName: "RecoAttrVehicule",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "cartesVerte",
-  //     headerName: "cartesVerte",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     //Conducteur
-  //     field: "nom",
-  //     headerName: "nom",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "prenom",
-  //     headerName: "prenom",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   { field: "matricule", headerName: "matricule", width: 80 },
-  //   {
-  //     field: "grade",
-  //     headerName: "grade",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "departement",
-  //     headerName: "departement",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "filiale",
-  //     headerName: "filiale",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "numTagJawaz",
-  //     headerName: "numTagJawaz",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   { field: "plafondJawaz", headerName: "plafondJawaz", width: 80 },
-  //   {
-  //     field: "numeroCarteCarburant",
-  //     headerName: "numeroCarteCarburant",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "dotationCarteCarburant",
-  //     headerName: "dotationCarteCarburant",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "expirationCarteCarburant",
-  //     headerName: "expirationCarteCarburant",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     //sous-contract
-  //     field: "prestataire",
-  //     headerName: "prestataire",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   { field: "utilisation", headerName: "utilisation", width: 80 },
-  //   {
-  //     field: "dateDebut",
-  //     headerName: "dateDebut",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "dateFin",
-  //     headerName: "dateFin",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "montant",
-  //     headerName: "montant",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "voitureId",
-  //     headerName: "voitureId",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   { field: "conducteurId", headerName: "conducteurId", width: 80 },
-  //   {
-  //     field: "numeroParc",
-  //     headerName: "numeroParc",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "annee",
-  //     headerName: "annee",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "A_O_N",
-  //     headerName: "A_O_N",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "numberoContract",
-  //     headerName: "numberoContract",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "referenceParcContractLoueur",
-  //     headerName: "referenceParcContractLoueur",
-  //     width: 80,
-  //   },
-  //   {
-  //     field: "duree",
-  //     headerName: "duree",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "montantMensuelHT",
-  //     headerName: "montantMensuelHT",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "Montant_TTC",
-  //     headerName: "Montant_TTC",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "montantMarcheHT",
-  //     headerName: "montantMarcheHT",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "montantFranchiseHT",
-  //     headerName: "montantFranchiseHT",
-  //     width: 80,
-  //   },
-  //   {
-  //     field: "remiseAccordee",
-  //     headerName: "remiseAccordee",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "KM_limit",
-  //     headerName: "KM_limit",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "KM_plus",
-  //     headerName: "KM_plus",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "KM_moins",
-  //     headerName: "KM_moins",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "echeanceDeCirculation",
-  //     headerName: "echeanceDeCirculation",
-  //     width: 80,
-  //   },
-  //   {
-  //     field: "DatePrevueRestitution",
-  //     headerName: "DatePrevueRestitution",
-  //     width: 200,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "DateEffectiveRestitution",
-  //     headerName: "DateEffectiveRestitution",
-  //     width: 150,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "KM_dateRetour",
-  //     headerName: "KM_dateRetour",
-  //     width: 100,
-  //     editable: true,
-  //   },
-  //   {
-  //     field: "contractEchu_enCours",
-  //     headerName: "contractEchu_enCours",
-  //     width: 100,
-  //     editable: true,
-  //   },
+  //  const [tableData, setTableData] = useState([])
 
-    // {
-    //   field: 'actions',
-    //   type: 'actions',
-    //   width: 80,
-    //   getActions: (params) => [
-    //     <GridActionsCellItem
-    //       icon={<DeleteIcon />}
-    //       label="Delete"
-    //     //onClick={deleteUser(params.id)}
-    //     />
-    //   ],
-    // },
-    // {
-    //   field: 'age',
-    //   headerName: 'Age',
-    //   //type: 'number',
-    //   width: 110,
-    //   editable: true,
-    // },
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 100,
-    //   valueGetter: (params) =>
-    //     `${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''
-    //     }`,
-    // },
-  // ];
+  //   useEffect(() => {
+  //     axios.get('http://localhost:4000/api/contract/').then(res => setTableData(res.data)).then(console.log("I AM GET METHOD"))
 
-  const [tableData, setTableData] = useState([])
-
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/api/contract/")
-  //     .then((data) => data.json())
-  //     .then((data) => setTableData(data))
-  // }, [])
-
-   axios.get('http://localhost:4000/api/contract/').then(res => setTableData(res.data))
-
-  // .catch(function (error) {const data = await
-  //   if(error.response){
-  //     alert(error.response.data.error)
-  //   }
-  //   else{
-  //     console.log("Success")
-  //     alert("Success")
-  //   }
-  // })
+  //   }, [])
 
   const toolbarOptions = [
     "ColumnChooser",
@@ -413,6 +74,36 @@ const SimpleViewtable = () => {
     newRowPosition: "Top",
   };
   const filterSettings = { type: "CheckBox" };
+
+  // const baseURL = "http://localhost:4000/api/contract"
+  // const data = new DataManager({
+  //   adaptor : new UrlAdaptor(),
+  //   insertUrl: baseURL + '/',
+  //   removeurl: baseURL + '/:id',
+  //   updateUrl: baseURL + '/:id',
+  // })
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/contract/")
+      .then((res) => {
+        setData(res.data);
+      })
+    // .then((data) => {
+    //   return { result: data };
+    // });
+  }, []);
+
+  // function dataStateChange(args) {
+  //   // useEffect(()=>{
+  //   //   axios.get('http://localhost:4000/api/contract/').then(res => {setData(res.data)}).then((data)=>{return{result: data}})
+  //   // }, [])
+  // }
+  // const dataSourceChanged = (state) => {
+  //   alert("NULLSHIT");
+  //   console.log(state);
+  // };
 
   return (
     <>
@@ -482,6 +173,19 @@ const SimpleViewtable = () => {
                     >
                       <Typography>Charts</Typography>
                     </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<DeleteIcon />}
+                      style={styles.buttonExtendedView}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const name = prompt("Entrez l'ID du contract");
+                        axios.delete(`http://localhost:4000/api/contract/${name}`);
+                      }}
+                    >
+                      <Typography>Delete</Typography>
+                    </Button>
                   </ButtonGroup>
                 </Grid>
                 <Grid item>
@@ -492,7 +196,9 @@ const SimpleViewtable = () => {
                     endIcon={<ChevronRightIcon />}
                     onClick={(e) => {
                       e.preventDefault();
-                      window.location.href = "/";
+                      localStorage.removeItem("token");
+                      alert("You're Logged Out")
+                      navigate("/", { replace: true })
                     }}
                   >
                     Sign Out
@@ -504,10 +210,12 @@ const SimpleViewtable = () => {
               <div className="control-pane" style={styles.syncGrid}>
                 <div className="control-section" style={styles.syncGrid}>
                   <GridComponent
-                    dataSource={tableData}
+                    dataSource={data}
+                    // dataSourceChanged={dataSourceChanged}
+                    // dataStateChange={dataStateChange}
                     allowResizing={true}
                     height="100%"
-                    gridLines='Both'
+                    gridLines="Both"
                     editSettings={editSettings}
                     selectionSettings={selectionsettings}
                     allowTextWrap={true}
@@ -526,7 +234,7 @@ const SimpleViewtable = () => {
                     <ColumnsDirective>
                       <ColumnDirective
                         type="checkbox"
-                        maxWidth="15"
+                        maxWidth="60"
                       ></ColumnDirective>
 
                       <ColumnDirective
@@ -540,14 +248,11 @@ const SimpleViewtable = () => {
                         textAlign="Center"
                       />
 
-
                       <ColumnDirective
                         field="numeroChassis"
                         headerText="Numero de chassis"
                         textAlign="Center"
                       />
-         
-            
 
                       <ColumnDirective
                         field="echeanceVisiteTechnique"
@@ -591,8 +296,7 @@ const SimpleViewtable = () => {
                         headerName="Matricule"
                         textAlign="Center"
                       />
-                 
-                  
+
                       <ColumnDirective
                         field="filiale"
                         headerText="Filiale"
@@ -603,13 +307,13 @@ const SimpleViewtable = () => {
                         headerText="Numero Tag Jawaz"
                         textAlign="Center"
                       />
-                 
+
                       <ColumnDirective
                         field="numeroCarteCarburant"
                         headerText="Numero carte carburant"
                         textAlign="Center"
                       />
-              
+
                       <ColumnDirective
                         field="prestataire"
                         headerText="Prestataire"
@@ -661,8 +365,9 @@ const SimpleViewtable = () => {
                         textAlign="Center"
                       />
                       <ColumnDirective
+                        isPrimaryKey={true}
                         field="numberoContract"
-                        headerText="Numbero de contract"
+                        headerText="Numero de contract"
                         textAlign="Center"
                       />
                       <ColumnDirective
@@ -775,7 +480,7 @@ const styles = {
     borderRadius: 8,
   },
   table: {
-    height: "61.5vh",
+    height: "65vh",
     width: "99vw",
     margin: 0,
   },

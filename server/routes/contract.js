@@ -12,19 +12,18 @@ const {
 
 
 //GET all actual contracts 
-router.get('/', getContracts );
+router.get('/', getContracts);
 
 //GET a single contract
 router.get('/:id', getContract);
 
 //POST a new contract
-
-router.post('/',createContract);
+router.post('/', createContract);
 
 //DELETE a contract
-router.delete('/:id',deleteContract);
+router.delete('/:id', deleteContract);
 
 //UPDATE a contract
 router.patch('/:id', updateContract);
 
-module.exports= router;
+module.exports = router;
