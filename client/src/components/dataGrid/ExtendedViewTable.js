@@ -17,8 +17,10 @@ import {
   Selection,
   ExcelExport,
 } from "@syncfusion/ej2-react-grids";
-import axios from'axios';
+import axios from 'axios';
 import { useState } from 'react';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 import "./grid.css";
 import { Box, Grid, Button } from '@material-ui/core'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -28,8 +30,12 @@ import FullscreenExitIcon from '@material-ui/icons/FullscreenExit'
 import DonutLargeIcon from '@material-ui/icons/DonutLarge'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { DataManager, UrlAdaptor } from '@syncfusion/ej2-data';
+import { useNavigate } from "react-router-dom";
+
 
 const ExtendedViewTable = () => {
+  let navigate = useNavigate()
+
   const theme = createTheme({
     typography: {
       fontFamily: ['K2D', 'Noto-sans', 'sans-serif'].join(','),
@@ -386,7 +392,7 @@ const ExtendedViewTable = () => {
   const [tableData, setTableData] = useState([])
 
 
-   axios.get('http://localhost:4000/api/contract/').then(res => setTableData(res.data))
+  axios.get('http://localhost:4000/api/contract/').then(res => setTableData(res.data))
 
 
   const toolbarOptions = [
@@ -470,10 +476,12 @@ const ExtendedViewTable = () => {
                   <Button
                     variant="contained"
                     style={styles.singOutbutton}
-                    endIcon={<ChevronRightIcon />}
+                    startIcon={<ExitToAppIcon />}
                     onClick={(e) => {
                       e.preventDefault()
-                      window.location.href = '/'
+                      localStorage.removeItem("token");
+                      alert("Logging Out")
+                      navigate("/", { replace: true })
                     }}
                   >
                     Sign Out
@@ -560,7 +568,7 @@ const ExtendedViewTable = () => {
                         headerText="Référence pneus"
                         textAlign="Center"
                       />
-        
+
                       <ColumnDirective
                         field="echeanceVisiteTechnique"
                         headerText="Echéance visite technique"
@@ -586,7 +594,7 @@ const ExtendedViewTable = () => {
                         headerName="Nombre de Clés"
                         textAlign="Center"
                       />
-                            <ColumnDirective
+                      <ColumnDirective
                         field="cartesVerte"
                         headerText="Cartes verte"
                         textAlign="Center"
@@ -596,7 +604,7 @@ const ExtendedViewTable = () => {
                         headerText="Reco_Attr_Vehicule"
                         textAlign="Center"
                       />
-                
+
                       <ColumnDirective
                         field="nom"
                         headerText="Nom"
@@ -654,7 +662,7 @@ const ExtendedViewTable = () => {
                         headerText="Expiration carte carburant"
                         textAlign="Center"
                       />
-                                            <ColumnDirective
+                      <ColumnDirective
                         field="prestataire"
                         headerText="Prestataire"
                         textAlign="Center"
@@ -784,7 +792,7 @@ const ExtendedViewTable = () => {
                         headerText="Contract echu/en cours"
                         textAlign="Center"
                       />
-                      </ColumnsDirective>
+                    </ColumnsDirective>
                     <Inject
                       services={[
                         Resize,

@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 import axios from "axios";
 import { Box, Grid, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -95,6 +95,34 @@ const SimpleViewtable = () => {
     // });
   }, []);
 
+  let grid = null
+  const rowSelected = (args) => {
+    const selectedRowIndex = grid.getSelectedRowIndexes();
+    // alert(selectedRowIndex.da)
+    // const selectedrowindex = this.grid.getSelectedRowIndexes();
+    const selectedrecords = grid.getSelectedRecords();
+    const id = JSON.stringify(selectedrecords)
+    var stringify = JSON.parse(id)
+    //alert(stringify[0]['_id'])
+    window.idToDelete = stringify[0]['_id']
+    //   if (key == "_id") {
+    //     alert(value)
+    //     return value;
+    //   }
+    // })
+    // alert(selectedRowIndex + " : " + JSON.stringify(selectedrecords, function (key, value) {
+    //   if (key == "_id") {
+    //     alert(value)
+    //     return value;
+    //   }
+    // }));
+    // var index = grid.getRowIndexByPrimaryKey(10251);
+    // // Select the row using the index value
+    // grid.selectRow(index)
+
+    //args.row.getRowIndexByPrimaryKey
+  };
+
   // function dataStateChange(args) {
   //   // useEffect(()=>{
   //   //   axios.get('http://localhost:4000/api/contract/').then(res => {setData(res.data)}).then((data)=>{return{result: data}})
@@ -121,7 +149,7 @@ const SimpleViewtable = () => {
                 alt="logo"
                 style={styles.logo}
               />
-              <Button
+              {/* <Button
                 variant="contained"
                 color="primary"
                 startIcon={<AddIcon />}
@@ -132,7 +160,7 @@ const SimpleViewtable = () => {
                 }}
               >
                 <Typography>ajouter une allocation</Typography>
-              </Button>
+              </Button> */}
             </Box>
           </Grid>
           <Grid item style={styles.table}>
@@ -151,6 +179,19 @@ const SimpleViewtable = () => {
                   >
                     <Button
                       variant="contained"
+                      color="primary"
+                      startIcon={<AddIcon />}
+                      // style={styles.button}
+                      style={styles.buttonExtendedView}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/addingCar";
+                      }}
+                    >
+                      <Typography>ajouter une allocation</Typography>
+                    </Button>
+                    <Button
+                      variant="contained"
                       style={styles.buttonExtendedView}
                       startIcon={<FullscreenIcon />}
                       onClick={(e) => {
@@ -160,11 +201,11 @@ const SimpleViewtable = () => {
                     >
                       <Typography>Extended view</Typography>
                     </Button>
-
+                    {/* 
                     <Button
                       variant="contained"
                       color="primary"
-                      style={styles.buttonExtendedView}
+
                       startIcon={<DonutLargeIcon />}
                       onClick={(e) => {
                         e.preventDefault();
@@ -172,7 +213,7 @@ const SimpleViewtable = () => {
                       }}
                     >
                       <Typography>Charts</Typography>
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -180,8 +221,8 @@ const SimpleViewtable = () => {
                       style={styles.buttonExtendedView}
                       onClick={(e) => {
                         e.preventDefault();
-                        const name = prompt("Entrez l'ID du contract");
-                        axios.delete(`http://localhost:4000/api/contract/${name}`);
+                        //const name = prompt("Entrez l'ID du contract");
+                        axios.delete(`http://localhost:4000/api/contract/${window.idToDelete}`);
                       }}
                     >
                       <Typography>Delete</Typography>
@@ -192,12 +233,11 @@ const SimpleViewtable = () => {
                   <Button
                     variant="contained"
                     style={styles.singOutbutton}
-                    color="primary"
-                    endIcon={<ChevronRightIcon />}
+                    startIcon={<ExitToAppIcon />}
                     onClick={(e) => {
                       e.preventDefault();
                       localStorage.removeItem("token");
-                      alert("You're Logged Out")
+                      alert("Logging Out")
                       navigate("/", { replace: true })
                     }}
                   >
@@ -230,6 +270,9 @@ const SimpleViewtable = () => {
                     allowFiltering={true}
                     showColumnMenu={true}
                     filterSettings={filterSettings}
+                    //selectedRowIndex={1}
+                    rowSelected={rowSelected}
+                    ref={g => grid = g}
                   >
                     <ColumnsDirective>
                       <ColumnDirective
@@ -353,6 +396,7 @@ const SimpleViewtable = () => {
                         field="numeroParc"
                         headerText="Numero de Parc"
                         textAlign="Center"
+                      //isPrimaryKey="true"
                       />
                       <ColumnDirective
                         field="annee"
@@ -365,8 +409,8 @@ const SimpleViewtable = () => {
                         textAlign="Center"
                       />
                       <ColumnDirective
-                        isPrimaryKey={true}
-                        field="numberoContract"
+                        isPrimaryKey="true"
+                        field="numeroContract"
                         headerText="Numero de contract"
                         textAlign="Center"
                       />
@@ -480,7 +524,7 @@ const styles = {
     borderRadius: 8,
   },
   table: {
-    height: "65vh",
+    height: "66vh",
     width: "99vw",
     margin: 0,
   },
@@ -490,8 +534,8 @@ const styles = {
   },
   logo: {
     margin: 20,
-    height: 100,
-    width: 300,
+    height: 140,
+    width: 390,
   },
   addCarAndLogo: {
     display: "flex",

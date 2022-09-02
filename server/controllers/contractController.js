@@ -36,11 +36,11 @@ const createContract = async (req, res) => {
 const deleteContract = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'aucune contrat correspondante' })
+        return res.status(404).json({ error: 'aucune contrat correspondante 1' })
     }
     const contract = await contrat.findOneAndDelete({ _id: id });
     if (!contract) {
-        return res.status(404).json({ error: "aucune contrat correspondante" });
+        return res.status(404).json({ error: "aucune contrat correspondante 2" });
     }
     res.status(200).json(contract);
 };
