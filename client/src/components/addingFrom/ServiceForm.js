@@ -3,10 +3,11 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import { Formik } from 'formik'
 import { PersistFormikValues } from 'formik-persist-values'
-import React, { useEffect } from 'react'
-import { MenuItem, Select } from '@material-ui/core';
+import React from 'react'
+import { MenuItem } from '@material-ui/core';
 import * as yup from 'yup'
-import axios from 'axios'
+import swal from 'sweetalert';
+
 
 const validationSchema = yup.object({  // for fields validation
   prestataire: yup.string().required('Ce Champs est Obligatoire'),
@@ -85,9 +86,10 @@ const ServiceForm = (props) => {
           onSubmit={(values) => {
 
             //displaying the alert when submitting a form & going to the next form 
-            alert(JSON.stringify(values, null, 2))
+            swal(JSON.stringify(values, null, 2)).then(() => {
+              props.nextStep()
+            })
             props.updateContractFields(values)
-            props.nextStep()
             console.log(props.contractFields)
           }}
           validationSchema={validationSchema}
@@ -577,7 +579,7 @@ const ServiceForm = (props) => {
                   <Typography style={{ color: '#9e9e9e', marginTop: 20 }}>* Tous les champs sont Obligatoire</Typography>
                   <div style={styles.div}>
 
-                    //reseting the form
+                    {/* reseting the form */}
                     <Button
                       type="reset"
                       variant="contained"
@@ -614,7 +616,7 @@ const ServiceForm = (props) => {
                     </Button>
                   </div>
 
-                  //persisting the data for the 3 steps
+                  {/* persisting the data for the 3 steps */}
                   <PersistFormikValues storage='sessionStorage' name="service-form" />
                 </Box>
               </form>

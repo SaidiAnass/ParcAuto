@@ -3,8 +3,10 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import { Formik } from 'formik'
 import { PersistFormikValues } from 'formik-persist-values'
-import React, { Component } from 'react'
+import React from 'react'
 import * as yup from 'yup'
+import swal from 'sweetalert';
+
 
 const validationSchema = yup.object({   // for fields validation
   nom: yup.string().required('Ce Champ est obligatoire'),
@@ -47,11 +49,13 @@ const PersonForm = (props) => {
             expirationCarteCarburant: '',
           }}
           onSubmit={async (values) => { //displaying the alert when submitting a form & going to the next form 
-            alert(JSON.stringify(values, null, 2))
+            swal({
+              text: JSON.stringify(values, null, 2),
+            }).then(() => {
+              props.nextStep()
+            })
             await props.updateContractFields(values)
             console.log(props.contractFields)
-            props.nextStep()
-
           }}
           validationSchema={validationSchema}
         >

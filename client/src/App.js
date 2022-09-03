@@ -18,14 +18,14 @@ function App() {
     <div className="App" style={gradient} >
       <Routes>
         <Route element={<PrivateRoutes />}>
-        //simplified version of the data grid
+          {/* simplified version of the data grid */}
           <Route path="/simpleView" element={<SimpleViewtable />} />
-          //handling the form for adding the mini-contract
+          {/* handling the form for adding the mini-contract */}
           <Route path="/addingCar" element={<AddingForm />} />
-          //detailed version of the data grid
+          {/* detailed version of the data grid */}
           <Route path="/extendedView" element={<ExtendedViewTable />} />
         </Route>
-        //the sign in page
+        {/* the sign in page */}
         <Route exact path="/" element={<FormSignIn />} />
 
       </Routes>

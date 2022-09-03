@@ -1,10 +1,12 @@
-import { TextField, Button, Grid, Box, Select, MenuItem } from '@material-ui/core'
+import { TextField, Button, Grid, Box, MenuItem } from '@material-ui/core'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import { Formik } from 'formik'
 import { PersistFormikValues } from 'formik-persist-values'
 import React from 'react'
 import * as yup from 'yup'
+import swal from 'sweetalert';
+
 
 const validationSchema = yup.object({ // for fields validation
   marque: yup.string().required('Marque is required'),
@@ -64,9 +66,10 @@ const CarForm = (props) => {
             cartesVerte: '',
           }}
           onSubmit={async (values) => { //displaying the alert when submitting a form & going to the next form 
-            alert(JSON.stringify(values, null, 2))
+            swal(JSON.stringify(values, null, 2)).then(() => {
+              props.nextStep()
+            })
             await props.updateContractFields(values)
-            props.nextStep()
             console.log(props.contractFields)
           }}
           validationSchema={validationSchema}

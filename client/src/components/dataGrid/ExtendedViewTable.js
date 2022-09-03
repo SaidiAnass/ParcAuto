@@ -22,13 +22,14 @@ import { useState, useEffect } from 'react';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./grid.css";
 import { Box, Grid, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core'
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { useNavigate } from "react-router-dom";
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
+import swal from 'sweetalert';
+
 
 
 const ExtendedViewTable = () => {
@@ -40,11 +41,7 @@ const ExtendedViewTable = () => {
       fontSize: 15,
     },
   })
-  const useStyles = makeStyles({
-    root: {
-      display: 'flex',
-    },
-  })
+
 
   //storing the contracts for the data grid
   const [tableData, setTableData] = useState([])
@@ -139,7 +136,7 @@ const ExtendedViewTable = () => {
                       <Typography>ajouter une allocation</Typography>
                     </Button>
 
-                    //handling the delete operation
+                    {/* handling the delete operation */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -148,14 +145,15 @@ const ExtendedViewTable = () => {
                       onClick={async (e) => {
                         e.preventDefault();
                         await axios.delete(`http://localhost:4000/api/contract/${window.idToDelete}`);
-                        alert(window.numeroContract + " Est supprime")
-                        window.location.reload()
+                        swal(window.numeroContract + " Est supprime").then(() => {
+                          window.location.reload()
+                        })
                       }}
                     >
                       <Typography>Delete</Typography>
                     </Button>
 
-                    //handling the update operation
+                    {/* handling the update operation */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -164,8 +162,9 @@ const ExtendedViewTable = () => {
                       onClick={async (e) => {
                         e.preventDefault();
                         await axios.patch(`http://localhost:4000/api/contract/${window.idToDelete}`, window.updated);
-                        alert(window.numeroContract + " updated")
-                        window.location.reload()
+                        swal(window.numeroContract + " updated").then(() => {
+                          window.location.reload()
+                        })
                       }}
                     >
                       <Typography>Update</Typography>
@@ -181,8 +180,12 @@ const ExtendedViewTable = () => {
                       //handling the log out 
                       e.preventDefault()
                       localStorage.removeItem("token");
-                      alert("Logging Out")
-                      navigate("/", { replace: true })
+                      swal({
+                        title: "Logging Out",
+                        type: "warning",
+                        icon: "warning",
+                        timer: 3000
+                      }).then(() => { navigate("/", { replace: true }) })
                     }}
                   >
                     Sign Out

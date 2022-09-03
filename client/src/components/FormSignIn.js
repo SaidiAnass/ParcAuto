@@ -11,14 +11,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { setAuthToken } from "./setAuthToken";
-import { AlertContainer, alert } from 'react-custom-alert';
-import 'react-custom-alert/dist/index.css';
-
-
+import swal from 'sweetalert';
 
 const FormSignUp = () => {
 
-  const alertSuccess = () => alert({ message: 'success', type: 'success' });
 
   // handing the show/hide password
   const [showPassword, setShowPassword] = useState(false);
@@ -50,13 +46,18 @@ const FormSignUp = () => {
                   const token = response.data.token;
                   localStorage.setItem("token", token);
                   setAuthToken(token)
+                  swal({
+                    title: "Logged In!",
+                    type: "success",
+                    icon: "success",
+                    timer: 10000
+                  }).then(() => { window.location.href = "/simpleView" })
 
-                  window.location.href = "/simpleView"
                 }
               )
 
             } catch (error) {
-              alert(error.response.data.error + " - Please Enter the right credentials")
+              swal({ title: error.response.data.error, text: " - Please Enter the right credentials -", icon: "error" })
             }
             console.log(values);
           }}
@@ -138,11 +139,10 @@ const FormSignUp = () => {
                   </Grid>
                   <Button
                     type="submit"
-
                     color="primary"
                     variant="contained"
                     style={styles.SignInButton}
-                    onClick={alert({ message: 'info', type: 'info' })}
+                  //onClick={swal("Good job!", "You are logged In!", "success")}
                   >
                     <Typography variant="h5">Sign In</Typography>
                   </Button>

@@ -5,7 +5,6 @@ import axios from "axios";
 import { Box, Grid, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { makeStyles } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FullscreenIcon from "@material-ui/icons/Fullscreen";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -29,12 +28,9 @@ import {
 import "./grid.css";
 import { useNavigate } from "react-router-dom";
 import UpdateIcon from '@material-ui/icons/Update';
+import swal from 'sweetalert';
 
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-  },
-});
+
 
 const SimpleViewtable = () => {
 
@@ -149,7 +145,7 @@ const SimpleViewtable = () => {
                       <Typography>ajouter une allocation</Typography>
                     </Button>
 
-                    //for the delete operation
+                    {/* for the delete operation */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -158,14 +154,15 @@ const SimpleViewtable = () => {
                       onClick={async (e) => {
                         e.preventDefault();
                         await axios.delete(`http://localhost:4000/api/contract/${window.idToDelete}`);
-                        alert(window.numeroContract + " Est supprime")
-                        window.location.reload()
+                        swal(window.numeroContract + " Est supprime").then(() => {
+                          window.location.reload()
+                        })
                       }}
                     >
                       <Typography>Delete</Typography>
                     </Button>
 
-                    //for the update
+                    {/* for the update */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -174,8 +171,9 @@ const SimpleViewtable = () => {
                       onClick={async (e) => {
                         e.preventDefault();
                         await axios.patch(`http://localhost:4000/api/contract/${window.idToDelete}`, window.updated);
-                        alert(window.numeroContract + " updated")
-                        window.location.reload()
+                        swal(window.numeroContract + " updated").then(() => {
+                          window.location.reload()
+                        })
                       }}
                     >
                       <Typography>Update</Typography>
@@ -192,8 +190,13 @@ const SimpleViewtable = () => {
                       //handling log out
                       e.preventDefault();
                       localStorage.removeItem("token");
-                      alert("Logging Out")
-                      navigate("/", { replace: true })
+                      swal({
+                        title: "Logging Out",
+                        type: "warning",
+                        icon: "warning",
+                        timer: 3000
+                      }).then(() => { navigate("/", { replace: true }) })
+
                     }}
                   >
                     Sign Out
