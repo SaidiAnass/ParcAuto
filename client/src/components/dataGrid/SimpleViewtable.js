@@ -6,10 +6,8 @@ import { Box, Grid, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { makeStyles } from "@material-ui/core";
-import { Pagination } from "@material-ui/lab";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FullscreenIcon from "@material-ui/icons/Fullscreen";
-import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useState, useEffect } from "react";
 import {
@@ -29,8 +27,8 @@ import {
   ExcelExport,
 } from "@syncfusion/ej2-react-grids";
 import "./grid.css";
-import { DataManager, UrlAdaptor } from "@syncfusion/ej2-data";
 import { useNavigate } from "react-router-dom";
+import UpdateIcon from '@material-ui/icons/Update';
 
 const useStyles = makeStyles({
   root: {
@@ -40,7 +38,7 @@ const useStyles = makeStyles({
 
 const SimpleViewtable = () => {
 
-  let navigate = useNavigate()
+  let navigate = useNavigate() //for handling the log out 
   const theme = createTheme({
     // custoizing the fonts
     typography: {
@@ -49,19 +47,12 @@ const SimpleViewtable = () => {
     },
   });
 
-  //  const [tableData, setTableData] = useState([])
-
-  //   useEffect(() => {
-  //     axios.get('http://localhost:4000/api/contract/').then(res => setTableData(res.data)).then(console.log("I AM GET METHOD"))
-
-  //   }, [])
-
   const toolbarOptions = [
     "ColumnChooser",
     "Search",
-    "Add",
+    //"Add",
     "Edit",
-    "Delete",
+    //"Delete",
     "Update",
     "Cancel",
     "ExcelExport",
@@ -69,69 +60,38 @@ const SimpleViewtable = () => {
   const selectionsettings = { persistSelection: true };
   const editSettings = {
     allowEditing: true,
-    allowAdding: true,
-    allowDeleting: true,
+    //allowAdding: true,
+    // allowDeleting: true,
     newRowPosition: "Top",
   };
   const filterSettings = { type: "CheckBox" };
 
-  // const baseURL = "http://localhost:4000/api/contract"
-  // const data = new DataManager({
-  //   adaptor : new UrlAdaptor(),
-  //   insertUrl: baseURL + '/',
-  //   removeurl: baseURL + '/:id',
-  //   updateUrl: baseURL + '/:id',
-  // })
-
+  // for the contracts data
   const [data, setData] = useState([]);
+
+  //getting all the contracts
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/contract/")
       .then((res) => {
         setData(res.data);
       })
-    // .then((data) => {
-    //   return { result: data };
-    // });
   }, []);
 
   let grid = null
+
+  //handling the row selection
   const rowSelected = (args) => {
-    const selectedRowIndex = grid.getSelectedRowIndexes();
-    // alert(selectedRowIndex.da)
-    // const selectedrowindex = this.grid.getSelectedRowIndexes();
     const selectedrecords = grid.getSelectedRecords();
     const id = JSON.stringify(selectedrecords)
     var stringify = JSON.parse(id)
-    //alert(stringify[0]['_id'])
+    window.updated = stringify[0]
     window.idToDelete = stringify[0]['_id']
-    //   if (key == "_id") {
-    //     alert(value)
-    //     return value;
-    //   }
-    // })
-    // alert(selectedRowIndex + " : " + JSON.stringify(selectedrecords, function (key, value) {
-    //   if (key == "_id") {
-    //     alert(value)
-    //     return value;
-    //   }
-    // }));
-    // var index = grid.getRowIndexByPrimaryKey(10251);
-    // // Select the row using the index value
-    // grid.selectRow(index)
-
-    //args.row.getRowIndexByPrimaryKey
+    window.numeroContract = stringify[0]['numeroContract']
+    console.log(stringify[0])
   };
 
-  // function dataStateChange(args) {
-  //   // useEffect(()=>{
-  //   //   axios.get('http://localhost:4000/api/contract/').then(res => {setData(res.data)}).then((data)=>{return{result: data}})
-  //   // }, [])
-  // }
-  // const dataSourceChanged = (state) => {
-  //   alert("NULLSHIT");
-  //   console.log(state);
-  // };
+
 
   return (
     <>
@@ -149,18 +109,6 @@ const SimpleViewtable = () => {
                 alt="logo"
                 style={styles.logo}
               />
-              {/* <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                style={styles.button}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = "/addingCar";
-                }}
-              >
-                <Typography>ajouter une allocation</Typography>
-              </Button> */}
             </Box>
           </Grid>
           <Grid item style={styles.table}>
@@ -179,19 +127,6 @@ const SimpleViewtable = () => {
                   >
                     <Button
                       variant="contained"
-                      color="primary"
-                      startIcon={<AddIcon />}
-                      // style={styles.button}
-                      style={styles.buttonExtendedView}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href = "/addingCar";
-                      }}
-                    >
-                      <Typography>ajouter une allocation</Typography>
-                    </Button>
-                    <Button
-                      variant="contained"
                       style={styles.buttonExtendedView}
                       startIcon={<FullscreenIcon />}
                       onClick={(e) => {
@@ -201,31 +136,49 @@ const SimpleViewtable = () => {
                     >
                       <Typography>Extended view</Typography>
                     </Button>
-                    {/* 
                     <Button
                       variant="contained"
                       color="primary"
-
-                      startIcon={<DonutLargeIcon />}
+                      startIcon={<AddIcon />}
+                      style={styles.CrudButton}
                       onClick={(e) => {
                         e.preventDefault();
-                        window.location.href = "/#";
+                        window.location.href = "/addingCar";
                       }}
                     >
-                      <Typography>Charts</Typography>
-                    </Button> */}
+                      <Typography>ajouter une allocation</Typography>
+                    </Button>
+
+                    //for the delete operation
                     <Button
                       variant="contained"
                       color="primary"
                       startIcon={<DeleteIcon />}
-                      style={styles.buttonExtendedView}
-                      onClick={(e) => {
+                      style={styles.CrudButton}
+                      onClick={async (e) => {
                         e.preventDefault();
-                        //const name = prompt("Entrez l'ID du contract");
-                        axios.delete(`http://localhost:4000/api/contract/${window.idToDelete}`);
+                        await axios.delete(`http://localhost:4000/api/contract/${window.idToDelete}`);
+                        alert(window.numeroContract + " Est supprime")
+                        window.location.reload()
                       }}
                     >
                       <Typography>Delete</Typography>
+                    </Button>
+
+                    //for the update
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<UpdateIcon />}
+                      style={styles.CrudButton}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await axios.patch(`http://localhost:4000/api/contract/${window.idToDelete}`, window.updated);
+                        alert(window.numeroContract + " updated")
+                        window.location.reload()
+                      }}
+                    >
+                      <Typography>Update</Typography>
                     </Button>
                   </ButtonGroup>
                 </Grid>
@@ -235,6 +188,8 @@ const SimpleViewtable = () => {
                     style={styles.singOutbutton}
                     startIcon={<ExitToAppIcon />}
                     onClick={(e) => {
+
+                      //handling log out
                       e.preventDefault();
                       localStorage.removeItem("token");
                       alert("Logging Out")
@@ -251,9 +206,8 @@ const SimpleViewtable = () => {
                 <div className="control-section" style={styles.syncGrid}>
                   <GridComponent
                     dataSource={data}
-                    // dataSourceChanged={dataSourceChanged}
-                    // dataStateChange={dataStateChange}
                     allowResizing={true}
+                    wrapText={true}
                     height="100%"
                     gridLines="Both"
                     editSettings={editSettings}
@@ -270,7 +224,6 @@ const SimpleViewtable = () => {
                     allowFiltering={true}
                     showColumnMenu={true}
                     filterSettings={filterSettings}
-                    //selectedRowIndex={1}
                     rowSelected={rowSelected}
                     ref={g => grid = g}
                   >
@@ -278,55 +231,15 @@ const SimpleViewtable = () => {
                       <ColumnDirective
                         type="checkbox"
                         maxWidth="60"
-                      ></ColumnDirective>
-
+                      />
                       <ColumnDirective
                         field="marque"
                         headerName="Marque"
                         textAlign="Center"
-                      ></ColumnDirective>
+                      />
                       <ColumnDirective
                         field="immatriculation"
                         headerText="Immatriculation"
-                        textAlign="Center"
-                      />
-
-                      <ColumnDirective
-                        field="numeroChassis"
-                        headerText="Numero de chassis"
-                        textAlign="Center"
-                      />
-
-                      <ColumnDirective
-                        field="echeanceVisiteTechnique"
-                        headerText="Echéance visite technique"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="assuranceContractEnCours"
-                        headerText="Assurance contract en cours"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="vignette"
-                        headerText="Vignette"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="ww"
-                        headerText="ww"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="nombreDeCles"
-                        headerName="Nombre de Clés"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="nom"
-                        headerText="Nom"
-                        minWidth="8"
-                        width="100"
                         textAlign="Center"
                       />
                       <ColumnDirective
@@ -339,24 +252,11 @@ const SimpleViewtable = () => {
                         headerName="Matricule"
                         textAlign="Center"
                       />
-
                       <ColumnDirective
                         field="filiale"
                         headerText="Filiale"
                         textAlign="Center"
                       />
-                      <ColumnDirective
-                        field="numTagJawaz"
-                        headerText="Numero Tag Jawaz"
-                        textAlign="Center"
-                      />
-
-                      <ColumnDirective
-                        field="numeroCarteCarburant"
-                        headerText="Numero carte carburant"
-                        textAlign="Center"
-                      />
-
                       <ColumnDirective
                         field="prestataire"
                         headerText="Prestataire"
@@ -383,110 +283,14 @@ const SimpleViewtable = () => {
                         textAlign="Center"
                       />
                       <ColumnDirective
-                        field="voitureId"
-                        headerText="voitureId"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="conducteurId"
-                        headerName="conducteurId"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
                         field="numeroParc"
                         headerText="Numero de Parc"
-                        textAlign="Center"
-                      //isPrimaryKey="true"
-                      />
-                      <ColumnDirective
-                        field="annee"
-                        headerText="Année"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="A_O_N"
-                        headerText="A_O_N"
                         textAlign="Center"
                       />
                       <ColumnDirective
                         isPrimaryKey="true"
                         field="numeroContract"
                         headerText="Numero de contract"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="referenceParcContractLoueur"
-                        headerName="Référence Parc Contract Loueur"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="duree"
-                        headerText="Durée"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="montantMensuelHT"
-                        headerText="Montant mensuel HT"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="Montant_TTC"
-                        headerText="Montant_TTC"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="montantMarcheHT"
-                        headerText="Montant marché  HT"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="montantFranchiseHT"
-                        headerName="Montant Franchise HT"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="remiseAccordee"
-                        headerText="Remise Accordée"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="KM_limit"
-                        headerText="KM_limit"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="KM_plus"
-                        headerText="KM +"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="KM_moins"
-                        headerText="KM -"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="echeanceDeCirculation"
-                        headerText="Echéance de circulation"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="DatePrevueRestitution"
-                        headerText="Date revue restitution"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="DateEffectiveRestitution"
-                        headerText="Date effective restitution"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="KM_dateRetour"
-                        headerText="KM date de retour"
-                        textAlign="Center"
-                      />
-                      <ColumnDirective
-                        field="contractEchu_enCours"
-                        headerText="Contract echu/en cours"
                         textAlign="Center"
                       />
                     </ColumnsDirective>
@@ -515,7 +319,10 @@ const SimpleViewtable = () => {
   );
 };
 
+
 const styles = {
+
+  //customizing the container for the data grid
   divTable: {
     height: "100%",
     width: "99.90%",
@@ -528,14 +335,18 @@ const styles = {
     width: "99vw",
     margin: 0,
   },
+
+  //customizing the data grid
   syncGrid: {
     backgroundColor: "#249bd7",
     height: "100%",
   },
+
+  //customizing the logo
   logo: {
     margin: 20,
     height: 140,
-    width: 390,
+    width: 400,
   },
   addCarAndLogo: {
     display: "flex",
@@ -568,9 +379,13 @@ const styles = {
   groupButton: {
     borderRadius: 8,
   },
-  buttonExtendedView: {
+  CrudButton: {
     textTransform: "capitalize",
   },
+  buttonExtendedView: {
+    textTransform: "capitalize",
+    marginRight: 30,
+  }
 };
 
 export default SimpleViewtable;

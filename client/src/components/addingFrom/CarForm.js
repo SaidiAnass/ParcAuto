@@ -151,13 +151,9 @@ const CarForm = (props) => {
                         formik.errors.bariole
                       }
                       style={styles.text}
-                    //defaultValue={"false"}
                     >
-                      {/* <Select defaultValue={"false"}> */}
                       <MenuItem value="false">Non</MenuItem>
                       <MenuItem value="true">Oui</MenuItem>
-                      {/* </Select> */}
-
                     </TextField>
                   </div>
                   <div style={styles.fields}>

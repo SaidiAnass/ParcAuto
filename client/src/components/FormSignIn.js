@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField";
 import { Grid, Button, Box } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
-import { Link } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -11,32 +10,20 @@ import IconButton from "@material-ui/core/IconButton";
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
-import { RestoreOutlined } from "@material-ui/icons";
-import PrivateRoutes from "./PrivateRoutes";
 import { setAuthToken } from "./setAuthToken";
+import { AlertContainer, alert } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
+
 
 
 const FormSignUp = () => {
-  // const [fields, setFields] = useState({
-  //   // for stroring the inputs
-  //   email: '',
-  //   password: '',
-  // })
 
-  const [showPassword, setShowPassword] = useState(false); // handing the show/hide password
+  const alertSuccess = () => alert({ message: 'success', type: 'success' });
+
+  // handing the show/hide password
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-  // const handleChange = (e) => {
-  //   // handles the changes in the fields
-  //   const { name, value } = e.target
-  //   setFields((prevInput) => {
-  //     return {
-  //       ...prevInput,
-  //       [name]: value,
-  //     }
-  //   })
-  //   console.log(fields)
-  // }
 
   const theme = createTheme({
     // customizing the fonts
@@ -49,26 +36,28 @@ const FormSignUp = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
+        {/* fromik a react library for implementing forms */}
         <Formik
           initialValues={{
             email: "",
             password: "",
           }}
           onSubmit={async (values) => {
-            try{
-               await axios.post('http://localhost:4000/api/user/login', values).then(
+            // Logging AND stroing the token 
+            try {
+              await axios.post('http://localhost:4000/api/user/login', values).then(
                 response => {
                   const token = response.data.token;
                   localStorage.setItem("token", token);
                   setAuthToken(token)
-                  alert("Success")
+
                   window.location.href = "/simpleView"
                 }
-               )
-    
-            }catch(error) {
-                  alert(error.response.data.error + " - Please Enter the right credentials")
-              }
+              )
+
+            } catch (error) {
+              alert(error.response.data.error + " - Please Enter the right credentials")
+            }
             console.log(values);
           }}
           validationSchema={yup.object({
@@ -153,6 +142,7 @@ const FormSignUp = () => {
                     color="primary"
                     variant="contained"
                     style={styles.SignInButton}
+                    onClick={alert({ message: 'info', type: 'info' })}
                   >
                     <Typography variant="h5">Sign In</Typography>
                   </Button>
@@ -161,7 +151,7 @@ const FormSignUp = () => {
             </Grid>
           )}
         </Formik>
-      </ThemeProvider>
+      </ThemeProvider >
     </>
   );
 };
@@ -213,4 +203,3 @@ const styles = {
 
 export default FormSignUp;
 
-/* STILL NEEDS JWT FOR AUTHENTICATION */

@@ -50,7 +50,6 @@ const PersonForm = (props) => {
             alert(JSON.stringify(values, null, 2))
             await props.updateContractFields(values)
             console.log(props.contractFields)
-            //this.props.nextStep()
             props.nextStep()
 
           }}
@@ -259,22 +258,6 @@ const PersonForm = (props) => {
                       helperText={
                         formik.touched.expirationCarteCarburant &&
                         formik.errors.expirationCarteCarburant
-                      }
-                      style={styles.text}
-                    />
-                    <TextField
-                      id="filiale"
-                      name="filiale"
-                      label="Filiale *"
-                      variant="outlined"
-                      value={formik.values.filiale}
-                      onChange={formik.handleChange}
-                      error={
-                        formik.touched.filiale &&
-                        Boolean(formik.errors.filiale)
-                      }
-                      helperText={
-                        formik.touched.filiale && formik.errors.filiale
                       }
                       style={styles.text}
                     />

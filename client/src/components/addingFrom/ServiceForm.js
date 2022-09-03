@@ -45,6 +45,8 @@ const theme = createTheme({
 })
 
 const ServiceForm = (props) => {
+
+  //handling the back event
   const back = (e) => {
     e.preventDefault()
     props.prevStep()
@@ -81,35 +83,12 @@ const ServiceForm = (props) => {
             contractEchu_enCours: '',
           }}
           onSubmit={(values) => {
+
             //displaying the alert when submitting a form & going to the next form 
-
-
             alert(JSON.stringify(values, null, 2))
             props.updateContractFields(values)
             props.nextStep()
             console.log(props.contractFields)
-            // try{
-            //   await axios.post("http://localhost:4000/api/contract/", props.contractFields).then(
-            //   response => {
-            //     alert("contract added Successfully")
-            //     console.log(response.data)
-            //     props.nextStep();
-            //   }
-            // )
-            // }catch(error) {
-            //   alert(error.response.data.error)
-            // }
-
-            //.catch(function (error) {
-            //   if(error.response){
-            //     alert(error.response.data.error)
-            //   }
-            //   else{
-            //     console.log("Success")                  
-            //   }
-            // }).then(alert('Contract added Succesfully'))
-
-            // console.log(this.props.contractFields)
           }}
           validationSchema={validationSchema}
         >
@@ -161,13 +140,10 @@ const ServiceForm = (props) => {
                         formik.errors.utilisation
                       }
                       style={styles.text}
-                    // defaultValue={"fonction"}
 
                     >
-                      {/* <Select defaultValue={"fonction"}> */}
                       <MenuItem value="fonction">Fonction</MenuItem>
                       <MenuItem value="service">Service</MenuItem>
-                      {/* </Select> */}
                     </TextField>
 
                   </div>
@@ -593,16 +569,15 @@ const ServiceForm = (props) => {
                         formik.errors.contractEchu_enCours
                       }
                       style={styles.text}
-                    //defaultValue={"enCours"}
                     >
-                      {/* <Select > */}
                       <MenuItem value="enCours">en Cours</MenuItem>
                       <MenuItem value="echu">Echu</MenuItem>
-                      {/* </Select> */}
                     </TextField>
                   </div>
-                  <Typography style={{ color: '#9e9e9e', marginTop: 20 }}>* Obligatoire</Typography>
+                  <Typography style={{ color: '#9e9e9e', marginTop: 20 }}>* Tous les champs sont Obligatoire</Typography>
                   <div style={styles.div}>
+
+                    //reseting the form
                     <Button
                       type="reset"
                       variant="contained"
@@ -638,6 +613,8 @@ const ServiceForm = (props) => {
                       Confirm & Continue
                     </Button>
                   </div>
+
+                  //persisting the data for the 3 steps
                   <PersistFormikValues storage='sessionStorage' name="service-form" />
                 </Box>
               </form>

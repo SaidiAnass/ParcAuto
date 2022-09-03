@@ -18,23 +18,21 @@ import {
   ExcelExport,
 } from "@syncfusion/ej2-react-grids";
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
 import "./grid.css";
 import { Box, Grid, Button } from '@material-ui/core'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { makeStyles } from '@material-ui/core'
-import { Pagination } from '@material-ui/lab'
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit'
-import DonutLargeIcon from '@material-ui/icons/DonutLarge'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import { DataManager, UrlAdaptor } from '@syncfusion/ej2-data';
 import { useNavigate } from "react-router-dom";
+import UpdateIcon from '@material-ui/icons/Update';
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
 
 
 const ExtendedViewTable = () => {
-  let navigate = useNavigate()
+  let navigate = useNavigate() //handling log out
 
   const theme = createTheme({
     typography: {
@@ -48,359 +46,25 @@ const ExtendedViewTable = () => {
     },
   })
 
-  // function CustomPagination() {
-  //   // const { state, apiRef } = useGridSlotComponentProps()
-  //   const classes = useStyles()
-
-  //   return (
-  //     <Pagination
-  //       className={classes.root}
-  //       color="primary"
-  //       count={state.pagination.pageCount}
-  //       page={state.pagination.page + 1}
-  //       onChange={(event, value) => apiRef.current.setPage(value - 1)}
-  //     />
-  //   )
-  // }
-
-  const columns = [
-    { field: "marque", headerName: "marque", width: 80 }, //voiture
-    {
-      field: "immatriculation",
-      headerName: "immatriculation",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "bariole",
-      headerName: "bariole",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "typeVehicule",
-      headerName: "typeVehicule",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "numeroChassis",
-      headerName: "numeroChassis",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "dateMiseEnCirculation",
-      headerName: "dateMiseEnCirculation",
-      width: 80,
-    },
-    {
-      field: "puissanceFiscale",
-      headerName: "puissanceFiscale",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "couleur",
-      headerName: "couleur",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "codeRadio",
-      headerName: "codeRadio",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "refPneus",
-      headerName: "refPneus",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "echeanceVisiteTechnique",
-      headerName: "echeanceVisiteTechnique",
-      width: 80,
-    },
-    {
-      field: "echeanceVisiteTechnique",
-      headerName: "echeanceVisiteTechnique",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "assuranceContractEnCours",
-      headerName: "assuranceContractEnCours",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "vignette",
-      headerName: "vignette",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "ww",
-      headerName: "ww",
-      width: 100,
-      editable: true,
-    },
-    { field: "nombreDeCles", headerName: "nombreDeCles", width: 80 },
-    {
-      field: "RecoAttrVehicule",
-      headerName: "RecoAttrVehicule",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "cartesVerte",
-      headerName: "cartesVerte",
-      width: 150,
-      editable: true,
-    },
-    {
-      //Conducteur
-      field: "nom",
-      headerName: "nom",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "prenom",
-      headerName: "prenom",
-      width: 100,
-      editable: true,
-    },
-    { field: "matricule", headerName: "matricule", width: 80 },
-    {
-      field: "grade",
-      headerName: "grade",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "departement",
-      headerName: "departement",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "filiale",
-      headerName: "filiale",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "numTagJawaz",
-      headerName: "numTagJawaz",
-      width: 100,
-      editable: true,
-    },
-    { field: "plafondJawaz", headerName: "plafondJawaz", width: 80 },
-    {
-      field: "numeroCarteCarburant",
-      headerName: "numeroCarteCarburant",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "dotationCarteCarburant",
-      headerName: "dotationCarteCarburant",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "expirationCarteCarburant",
-      headerName: "expirationCarteCarburant",
-      width: 100,
-      editable: true,
-    },
-    {
-      //sous-contract
-      field: "prestataire",
-      headerName: "prestataire",
-      width: 100,
-      editable: true,
-    },
-    { field: "utilisation", headerName: "utilisation", width: 80 },
-    {
-      field: "dateDebut",
-      headerName: "dateDebut",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "dateFin",
-      headerName: "dateFin",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "montant",
-      headerName: "montant",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "voitureId",
-      headerName: "voitureId",
-      width: 100,
-      editable: true,
-    },
-    { field: "conducteurId", headerName: "conducteurId", width: 80 },
-    {
-      field: "numeroParc",
-      headerName: "numeroParc",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "annee",
-      headerName: "annee",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "A_O_N",
-      headerName: "A_O_N",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "numberoContract",
-      headerName: "numberoContract",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "referenceParcContractLoueur",
-      headerName: "referenceParcContractLoueur",
-      width: 80,
-    },
-    {
-      field: "duree",
-      headerName: "duree",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "montantMensuelHT",
-      headerName: "montantMensuelHT",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "Montant_TTC",
-      headerName: "Montant_TTC",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "montantMarcheHT",
-      headerName: "montantMarcheHT",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "montantFranchiseHT",
-      headerName: "montantFranchiseHT",
-      width: 80,
-    },
-    {
-      field: "remiseAccordee",
-      headerName: "remiseAccordee",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "KM_limit",
-      headerName: "KM_limit",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "KM_plus",
-      headerName: "KM_plus",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "KM_moins",
-      headerName: "KM_moins",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "echeanceDeCirculation",
-      headerName: "echeanceDeCirculation",
-      width: 80,
-    },
-    {
-      field: "DatePrevueRestitution",
-      headerName: "DatePrevueRestitution",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "DateEffectiveRestitution",
-      headerName: "DateEffectiveRestitution",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "KM_dateRetour",
-      headerName: "KM_dateRetour",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "contractEchu_enCours",
-      headerName: "contractEchu_enCours",
-      width: 100,
-      editable: true,
-    },]
-
-  // const rows = [
-  //   {
-  //     id: 1,
-  //     lastName: 'Snow',
-  //     firstName: 'Jon',
-  //     age: 35,
-  //   },
-  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  //   { id: 10, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  //   { id: 11, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  //   { id: 12, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  //   { id: 13, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  //   { id: 14, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  //   { id: 15, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  //   { id: 16, lastName: 'Melisandre', firstName: null, age: 150 },
-  //   { id: 17, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  //   { id: 18, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  //   { id: 19, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  // ]
-
+  //storing the contracts for the data grid
   const [tableData, setTableData] = useState([])
 
-
-  axios.get('http://localhost:4000/api/contract/').then(res => setTableData(res.data))
+  // getting all contracts
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/contract/")
+      .then((res) => {
+        setTableData(res.data);
+      })
+  }, []);
 
 
   const toolbarOptions = [
     "ColumnChooser",
     "Search",
-    "Add",
+    //"Add",
     "Edit",
-    "Delete",
+    // "Delete",
     "Update",
     "Cancel",
     "ExcelExport",
@@ -408,20 +72,24 @@ const ExtendedViewTable = () => {
   const selectionsettings = { persistSelection: true };
   const editSettings = {
     allowEditing: true,
-    allowAdding: true,
-    allowDeleting: true,
+    // allowAdding: true,
+    // allowDeleting: true,
     newRowPosition: "Top",
   };
   const filterSettings = { type: "CheckBox" };
 
-  // const baseURL = "http://localhost:4000";
-  // const data = new DataManager({
-  //   adaptor : new UrlAdaptor(),
-  //   insertUrl: baseURL + '/api/contract/',
-  //   removeUrl: baseURL + '/api/contract/:id',
-  //   updateUrl: baseURL + '/api/contract/:id',
-  //   url: baseURL + '/api/contract/'
-  // })
+
+  //handling the grid selection
+  let grid = null
+  const rowSelected = (args) => {
+    const selectedrecords = grid.getSelectedRecords();
+    console.log(selectedrecords)
+    const id = JSON.stringify(selectedrecords)
+    var stringify = JSON.parse(id)
+    window.updated = stringify[0]
+    window.idToDelete = stringify[0]['_id']
+    window.numeroContract = stringify[0]['numeroContract']
+  };
 
   return (
     <>
@@ -461,14 +129,46 @@ const ExtendedViewTable = () => {
                     <Button
                       variant="contained"
                       color="primary"
-                      style={styles.buttonSimpleView}
-                      startIcon={<DonutLargeIcon />}
+                      startIcon={<AddIcon />}
+                      style={styles.CrudButton}
                       onClick={(e) => {
-                        e.preventDefault()
-                        window.location.href = '/#'
+                        e.preventDefault();
+                        window.location.href = "/addingCar";
                       }}
                     >
-                      <Typography>Charts</Typography>
+                      <Typography>ajouter une allocation</Typography>
+                    </Button>
+
+                    //handling the delete operation
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<DeleteIcon />}
+                      style={styles.CrudButton}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await axios.delete(`http://localhost:4000/api/contract/${window.idToDelete}`);
+                        alert(window.numeroContract + " Est supprime")
+                        window.location.reload()
+                      }}
+                    >
+                      <Typography>Delete</Typography>
+                    </Button>
+
+                    //handling the update operation
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<UpdateIcon />}
+                      style={styles.CrudButton}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await axios.patch(`http://localhost:4000/api/contract/${window.idToDelete}`, window.updated);
+                        alert(window.numeroContract + " updated")
+                        window.location.reload()
+                      }}
+                    >
+                      <Typography>Update</Typography>
                     </Button>
                   </ButtonGroup>
                 </Grid>
@@ -478,6 +178,7 @@ const ExtendedViewTable = () => {
                     style={styles.singOutbutton}
                     startIcon={<ExitToAppIcon />}
                     onClick={(e) => {
+                      //handling the log out 
                       e.preventDefault()
                       localStorage.removeItem("token");
                       alert("Logging Out")
@@ -495,6 +196,7 @@ const ExtendedViewTable = () => {
                   <GridComponent
                     dataSource={tableData}
                     allowResizing={true}
+                    wrapText={true}
                     height="100%"
                     gridLines='Both'
                     editSettings={editSettings}
@@ -511,6 +213,8 @@ const ExtendedViewTable = () => {
                     allowFiltering={true}
                     showColumnMenu={true}
                     filterSettings={filterSettings}
+                    rowSelected={rowSelected}
+                    ref={g => grid = g}
                   >
                     <ColumnsDirective>
                       <ColumnDirective
@@ -713,9 +417,10 @@ const ExtendedViewTable = () => {
                         textAlign="Center"
                       />
                       <ColumnDirective
-                        field="numberoContract"
-                        headerText="Numbero de contract"
+                        field="numeroContract"
+                        headerText="Numero de contract"
                         textAlign="Center"
+                        isPrimaryKey="true"
                       />
                       <ColumnDirective
                         field="referenceParcContractLoueur"
@@ -819,6 +524,8 @@ const ExtendedViewTable = () => {
 }
 
 const styles = {
+
+  //customizing the data grid container
   divTable: {
     height: '100%',
     width: '99.90%',
@@ -831,10 +538,13 @@ const styles = {
     width: '99vw',
     margin: 0,
   },
+  //customizing the data grid
   syncGrid: {
     backgroundColor: "#249bd7",
     height: "100%",
   },
+
+  //customizing the box above the data grid
   bar: {
     margin: 20,
     alignItems: 'center',
@@ -851,8 +561,12 @@ const styles = {
     marginLeft: 35,
     borderRadius: 8,
   },
+  CrudButton: {
+    textTransform: "capitalize",
+  },
   buttonSimpleView: {
     textTransform: 'capitalize',
+    marginRight: 30,
   },
 }
 

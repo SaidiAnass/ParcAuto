@@ -13,25 +13,30 @@ function App() {
   // Registering Syncfusion license key
   registerLicense('ORg4AjUWIQA/Gnt2VVhiQlFadVlJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRdk1hXn5ccnxWRGFaUEE=');
 
-  
+
   return (
-    <div className="App" style={gradient}>
+    <div className="App" style={gradient} >
       <Routes>
-        <Route element={<PrivateRoutes/>}>
-          <Route path="/simpleView" element={<SimpleViewtable />} />      //simplified version of the data grid
-          <Route path="/addingCar" element={<AddingForm />} />            //handling the form for adding the mini-contract
-          <Route path="/extendedView" element={<ExtendedViewTable />} />  //detailed version of the data grid
+        <Route element={<PrivateRoutes />}>
+        //simplified version of the data grid
+          <Route path="/simpleView" element={<SimpleViewtable />} />
+          //handling the form for adding the mini-contract
+          <Route path="/addingCar" element={<AddingForm />} />
+          //detailed version of the data grid
+          <Route path="/extendedView" element={<ExtendedViewTable />} />
         </Route>
-        <Route exact path="/" element={<FormSignIn />} />               //the sign in page
-        
+        //the sign in page
+        <Route exact path="/" element={<FormSignIn />} />
+
       </Routes>
     </div>
   )
 }
 
+//app background
 const gradient = {
   background:
-    'linear-gradient(to right, rgba(36,155,215,0.6), rgba(39,83,158,0.6))',
+    'linear-gradient(to right, rgba(36,155,215,0.7), rgba(39,83,158,0.9))',
 }
 
 export default App
