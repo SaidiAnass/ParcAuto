@@ -87,8 +87,6 @@ const SimpleViewtable = () => {
     console.log(stringify[0])
   };
 
-
-
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -130,7 +128,7 @@ const SimpleViewtable = () => {
                         window.location.href = "/extendedView";
                       }}
                     >
-                      <Typography>Extended view</Typography>
+                      <Typography>Vue Détaillée</Typography>
                     </Button>
                     <Button
                       variant="contained"
@@ -142,7 +140,7 @@ const SimpleViewtable = () => {
                         window.location.href = "/addingCar";
                       }}
                     >
-                      <Typography>ajouter une allocation</Typography>
+                      <Typography>Ajouter une Sous-Contract</Typography>
                     </Button>
 
                     {/* for the delete operation */}
@@ -159,7 +157,7 @@ const SimpleViewtable = () => {
                         })
                       }}
                     >
-                      <Typography>Delete</Typography>
+                      <Typography>Effacer</Typography>
                     </Button>
 
                     {/* for the update */}
@@ -176,7 +174,7 @@ const SimpleViewtable = () => {
                         })
                       }}
                     >
-                      <Typography>Update</Typography>
+                      <Typography>Mettre à jour</Typography>
                     </Button>
                   </ButtonGroup>
                 </Grid>
@@ -209,6 +207,7 @@ const SimpleViewtable = () => {
                 <div className="control-section" style={styles.syncGrid}>
                   <GridComponent
                     dataSource={data}
+                    //dataBound={dataBound.bind()}
                     allowResizing={true}
                     wrapText={true}
                     height="100%"

@@ -85,7 +85,7 @@ const CarForm = (props) => {
                 <Box style={styles.boxFrom}>
                   <Typography style={{ color: '#9e9e9e' }}>2/3</Typography>
                   <Typography variant="h4" style={styles.title}>
-                    Fill up the Car Form
+                    Les Informations de la Voiture
                   </Typography>
                   <div style={styles.fields}>
                     <TextField
@@ -400,14 +400,14 @@ const CarForm = (props) => {
                       style={styles.button}
                       onClick={e => formik.resetForm()}
                     >
-                      Reset
+                      Réinitialiser
                     </Button>
                     <Button
                       onClick={back}
                       variant="contained"
                       style={styles.button}
                     >
-                      Back
+                      Précédent
                     </Button>
 
                     <Button
@@ -419,7 +419,7 @@ const CarForm = (props) => {
                         window.location.href = '/simpleView'
                       }}
                     >
-                      Cancel
+                      Annuler
                     </Button>
 
                     <Button
@@ -427,7 +427,7 @@ const CarForm = (props) => {
                       variant="contained"
                       style={styles.button}
                     >
-                      Continue
+                      Continuer
                     </Button>
                   </div>
 

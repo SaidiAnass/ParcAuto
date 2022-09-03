@@ -70,7 +70,7 @@ const PersonForm = (props) => {
                 <Box style={styles.boxFrom}>
                   <Typography style={{ color: '#9e9e9e' }}>1/3</Typography>
                   <Typography variant="h4" style={styles.title}>
-                    Fill up the Person Form
+                    Les Infromation du Conducteur
                   </Typography>
                   <div style={styles.fields}>
                     <TextField
@@ -274,7 +274,7 @@ const PersonForm = (props) => {
                       style={styles.button}
                       onClick={e => formik.resetForm()}
                     >
-                      Reset
+                      Réinitialiser
                     </Button>
                     <Button
                       variant="contained"
@@ -285,14 +285,14 @@ const PersonForm = (props) => {
                         window.location.href = '/simpleView'
                       }}
                     >
-                      Cancel
+                      Annuler
                     </Button>
                     <Button
                       type="submit"
                       variant="contained"
                       style={styles.button}
                     >
-                      Continue
+                      Continuer
                     </Button>
                   </div>
                   <PersistFormikValues storage='sessionStorage' name="person-form" />

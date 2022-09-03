@@ -105,7 +105,7 @@ const ServiceForm = (props) => {
                 <Box style={styles.boxFrom}>
                   <Typography style={{ color: '#9e9e9e' }}>3/3</Typography>
                   <Typography variant="h4" style={styles.title}>
-                    Fill up the Service Form
+                    Les Informations du Sous-Contract
                   </Typography>
                   <div style={styles.fields}>
                     <TextField
@@ -586,14 +586,14 @@ const ServiceForm = (props) => {
                       style={styles.button}
                       onClick={e => formik.resetForm()}
                     >
-                      Reset
+                      Réinitialiser
                     </Button>
                     <Button
                       onClick={back}
                       variant="contained"
                       style={styles.button}
                     >
-                      Back
+                      Précédent
                     </Button>
 
                     <Button
@@ -605,14 +605,14 @@ const ServiceForm = (props) => {
                         window.location.href = '/simpleView'
                       }}
                     >
-                      Cancel
+                      Annuler
                     </Button>
                     <Button
                       type="submit"
                       variant="contained"
                       style={styles.button}
                     >
-                      Confirm & Continue
+                      Confirmer & Continuer
                     </Button>
                   </div>
 

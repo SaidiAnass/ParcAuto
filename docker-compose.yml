@@ -3,6 +3,44 @@ services:
   front_end:
     build: ./client
     container_name: client_container
+    stdin_open: true
     ports: 
       - '3000:3000'
+    networks: 
+      - parc-auto
+
+  api-server:
+    container_name: server_container
+    build: ./server
+    ports:
+      - '4000:4000'
+    networks: 
+      - parc-auto
+    environment:
+      PORT: 4000
+      MONGO_URI: mongodb://mongo_db:2717/Parc-Gestion
+      SECRET: javainuse-secret-key
+
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    ports:
+      - '2717:27017'
+    restart: always
+    volumes:
+      - mongodb-data:/data/db
+    networks: 
+      - parc-auto
+
+  
+networks:
+  parc-auto:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+    driver: local
     

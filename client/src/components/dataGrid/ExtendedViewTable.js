@@ -120,7 +120,7 @@ const ExtendedViewTable = () => {
                         window.location.href = '/simpleView'
                       }}
                     >
-                      <Typography>Simple view</Typography>
+                      <Typography>Vue Simple</Typography>
                     </Button>
 
                     <Button
@@ -133,7 +133,7 @@ const ExtendedViewTable = () => {
                         window.location.href = "/addingCar";
                       }}
                     >
-                      <Typography>ajouter une allocation</Typography>
+                      <Typography>Ajouter une Sous-Contract</Typography>
                     </Button>
 
                     {/* handling the delete operation */}
@@ -150,7 +150,7 @@ const ExtendedViewTable = () => {
                         })
                       }}
                     >
-                      <Typography>Delete</Typography>
+                      <Typography>Effacer</Typography>
                     </Button>
 
                     {/* handling the update operation */}
@@ -167,7 +167,7 @@ const ExtendedViewTable = () => {
                         })
                       }}
                     >
-                      <Typography>Update</Typography>
+                      <Typography>Mettre à jour</Typography>
                     </Button>
                   </ButtonGroup>
                 </Grid>

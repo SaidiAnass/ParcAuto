@@ -9,6 +9,6 @@ RUN npm install --force --save
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 4000
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
